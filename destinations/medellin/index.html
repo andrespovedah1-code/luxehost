@@ -246,8 +246,8 @@ main, .site-footer { position: relative; z-index: 1; }
 }
 .desktop-nav a:hover { color: var(--hueso); }
 .desktop-nav a:hover::after { transform: scaleX(1); transform-origin: left center; }
-.desktop-nav a[href="#blog"], .sidebar-nav a[href="#blog"] { color: var(--oro); }
-.desktop-nav a[href="#blog"]:hover { color: var(--oro-claro); }
+.desktop-nav a[data-i18n="nav.blog"], .sidebar-nav a[href$="#blog"] { color: var(--oro); }
+.desktop-nav a[data-i18n="nav.blog"]:hover { color: var(--oro-claro); }
 .header-actions { display: flex; align-items: center; gap: 13px; margin-left: 21px; }
 .language-switch { display: flex; align-items: center; gap: 0; font-family: var(--f-title); font-size: 13px; font-weight: 300; }
 .language-switch button {
@@ -379,9 +379,9 @@ main, .site-footer { position: relative; z-index: 1; }
 }
 .pill:hover { background: var(--hueso); border-color: var(--hueso); color: var(--obsidiana); }
 .pill:hover::after { translate: 3px 0; }
-/* The quiet second button in the hero: glass, smaller, beside the main one */
+/* The quiet second button: glass outline, the same size as the gold one beside it */
 .see.see-ghost {
-  min-height: 44px; padding: 0 21px; font-size: var(--type-small);
+  min-height: 55px; padding: 0 34px; font-size: var(--type-body);
   border-color: color-mix(in oklch, var(--hueso) 55%, transparent);
   background: color-mix(in oklch, var(--obsidiana) 32%, transparent); color: var(--hueso);
   -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px);
@@ -570,6 +570,8 @@ main, .site-footer { position: relative; z-index: 1; }
 .band .xp-card .xp-text { margin-top: 8px; color: var(--plata); font-size: 13px; line-height: 1.5; }
 .xp-more { display: flex; justify-content: center; margin-top: 55px; }
 .xp-link .arrow-glyph { color: var(--oro-claro); }
+.xp-link .xp-art { width: 144px; aspect-ratio: 1 / 1; }
+.xp-grid > li:last-child:nth-child(odd) { grid-column: 1 / -1; }
 .xp-link:hover { border-color: color-mix(in oklch, var(--oro) 45%, transparent); }
 .xp-link:hover .arrow-glyph { translate: 3px 0; }
 @media (hover: hover) { .xp-link:hover img { transform: scale(1.06); } }
@@ -920,7 +922,7 @@ main, .site-footer { position: relative; z-index: 1; }
   .reasons { grid-template-columns: 1fr; gap: 21px; }
   .xp-grid { grid-template-columns: 1fr; }
   .xp-link { grid-template-columns: 89px minmax(0, 1fr) auto; gap: 13px; padding: 8px 13px 8px 8px; border-radius: 17px; }
-  .xp-link picture { width: 89px; }
+  .xp-link picture, .xp-link .xp-art { width: 89px; }
   .reasons li { padding-top: 13px; }
   .stats-grid { grid-template-columns: 1fr 1fr; row-gap: 34px; }
   .stats-grid article:nth-child(3)::before { display: none; }

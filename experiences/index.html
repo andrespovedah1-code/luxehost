@@ -246,8 +246,8 @@ main, .site-footer { position: relative; z-index: 1; }
 }
 .desktop-nav a:hover { color: var(--hueso); }
 .desktop-nav a:hover::after { transform: scaleX(1); transform-origin: left center; }
-.desktop-nav a[href="#blog"], .sidebar-nav a[href="#blog"] { color: var(--oro); }
-.desktop-nav a[href="#blog"]:hover { color: var(--oro-claro); }
+.desktop-nav a[data-i18n="nav.blog"], .sidebar-nav a[href$="#blog"] { color: var(--oro); }
+.desktop-nav a[data-i18n="nav.blog"]:hover { color: var(--oro-claro); }
 .header-actions { display: flex; align-items: center; gap: 13px; margin-left: 21px; }
 .language-switch { display: flex; align-items: center; gap: 0; font-family: var(--f-title); font-size: 13px; font-weight: 300; }
 .language-switch button {
@@ -379,9 +379,9 @@ main, .site-footer { position: relative; z-index: 1; }
 }
 .pill:hover { background: var(--hueso); border-color: var(--hueso); color: var(--obsidiana); }
 .pill:hover::after { translate: 3px 0; }
-/* The quiet second button in the hero: glass, smaller, beside the main one */
+/* The quiet second button: glass outline, the same size as the gold one beside it */
 .see.see-ghost {
-  min-height: 44px; padding: 0 21px; font-size: var(--type-small);
+  min-height: 55px; padding: 0 34px; font-size: var(--type-body);
   border-color: color-mix(in oklch, var(--hueso) 55%, transparent);
   background: color-mix(in oklch, var(--obsidiana) 32%, transparent); color: var(--hueso);
   -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px);
@@ -570,6 +570,8 @@ main, .site-footer { position: relative; z-index: 1; }
 .band .xp-card .xp-text { margin-top: 8px; color: var(--plata); font-size: 13px; line-height: 1.5; }
 .xp-more { display: flex; justify-content: center; margin-top: 55px; }
 .xp-link .arrow-glyph { color: var(--oro-claro); }
+.xp-link .xp-art { width: 144px; aspect-ratio: 1 / 1; }
+.xp-grid > li:last-child:nth-child(odd) { grid-column: 1 / -1; }
 .xp-link:hover { border-color: color-mix(in oklch, var(--oro) 45%, transparent); }
 .xp-link:hover .arrow-glyph { translate: 3px 0; }
 @media (hover: hover) { .xp-link:hover img { transform: scale(1.06); } }
@@ -920,7 +922,7 @@ main, .site-footer { position: relative; z-index: 1; }
   .reasons { grid-template-columns: 1fr; gap: 21px; }
   .xp-grid { grid-template-columns: 1fr; }
   .xp-link { grid-template-columns: 89px minmax(0, 1fr) auto; gap: 13px; padding: 8px 13px 8px 8px; border-radius: 17px; }
-  .xp-link picture { width: 89px; }
+  .xp-link picture, .xp-link .xp-art { width: 89px; }
   .reasons li { padding-top: 13px; }
   .stats-grid { grid-template-columns: 1fr 1fr; row-gap: 34px; }
   .stats-grid article:nth-child(3)::before { display: none; }
@@ -978,37 +980,31 @@ html { scroll-padding-top: calc(var(--bar) + 34px); }
 .hero--page { min-height: max(640px, 82svh); }
 .hero--page .hero-copy .sub { max-width: 46ch; text-wrap: balance; }
 
-/* All six at a glance on wide screens: a 3 x 2 grid, with the intro beside it (1280px and up) or above it.
-   Below 980px the intro sits on top and the cards become a swipe rail, as on the services page.
-   (.rail-row has inline-size containment, so its width is always set here, never left to its content.) */
+/* Seven experiences. From 1280px they sit in a 4 x 2 grid whose first cell is the intro, so all of them show
+   at a glance; below that the intro sits on top and the cards are a swipe rail, as on the services page.
+   (In the grid the rail row and rail step aside with display: contents; xp.js reveals those cards one by one.) */
 .xp-layout { display: grid; gap: 34px; }
 .xp-intro { justify-self: center; text-align: center; }
 .xp-intro .brand-mark { margin-inline: auto; }
 .xp-intro .lede { max-width: 40ch; margin-inline: auto; }
 .xp-row { --card: 268px; --arrow-y: calc(var(--card) * 0.75); }
 .rail > .svc-card { width: var(--card); }
-@media (min-width: 980px) {
-  .xp-row { width: calc(3 * var(--card) + 42px); justify-self: center; }
-  .xp-row .arrow { display: none; }
-  .xp-rail {
-    display: grid; grid-template-columns: repeat(3, var(--card)); gap: 34px 21px;
-    overflow: visible; padding: 0; scroll-snap-type: none;
-    -webkit-mask-image: none; mask-image: none;
-  }
-}
 @media (min-width: 1280px) {
-  .xp-layout { grid-template-columns: minmax(0, 1fr) calc(3 * 268px + 42px); gap: 55px; align-items: start; }
-  .xp-row { justify-self: end; }
-  .xp-intro { position: sticky; top: 144px; justify-self: stretch; text-align: left; }
+  .xp-layout { grid-template-columns: repeat(4, 268px); justify-content: center; gap: 34px 21px; }
+  .xp-row, .xp-rail { display: contents; }
+  .xp-row .arrow { display: none; }
+  .xp-intro { grid-column: 1; grid-row: 1; align-self: center; justify-self: stretch; margin: 0; padding-right: 8px; text-align: left; }
   .xp-intro .brand-mark, .xp-intro .lede { margin-inline: 0; }
+  .xp-intro h2 { font-size: clamp(34px, 2.8vw, 42px); }
 }
 
 /* The tall card, as on the services page: the words on the photo over a soft fade, the name in gold.
    The whole card books the experience (the form opens with it filled in). */
 .svc-card { display: grid; overflow: hidden; border-radius: var(--radius); isolation: isolate; background: var(--tinta); }
-.svc-card > picture, .svc-card > .label { grid-area: 1 / 1; }
-.svc-card > picture { aspect-ratio: 2 / 3; border-radius: 0; }
-.svc-card > picture::after {
+.svc-card > picture, .svc-card > .ask-art, .svc-card > .label { grid-area: 1 / 1; }
+.svc-card > picture, .svc-card > .ask-art { aspect-ratio: 2 / 3; border-radius: 0; }
+.svc-card > .ask-art { place-items: start center; padding-top: 26%; border: 0; }
+.svc-card > picture::after, .svc-card > .ask-art::after {
   content: ""; position: absolute; inset: 0; z-index: 1; pointer-events: none;
   background: linear-gradient(to top, rgba(11, 11, 11, 0.95) 0%, rgba(11, 11, 11, 0.86) 34%, rgba(11, 11, 11, 0.62) 54%, rgba(11, 11, 11, 0.25) 68%, rgba(11, 11, 11, 0) 80%);
 }
@@ -1156,7 +1152,7 @@ html { scroll-padding-top: calc(var(--bar) + 34px); }
                 <a class="svc-more" href="#brief" data-exp="v4.xp.3t" aria-describedby="xp-3-t"><span data-i18n="xp.reserve">Reserve</span><span class="arrow-glyph" aria-hidden="true"></span></a>
               </div>
             </article>
-            <article class="photo-card svc-card" data-rise style="--d:0s">
+            <article class="photo-card svc-card" data-rise style="--d:.18s">
               <picture><source type="image/avif" srcset="../media/fit/xp3-brunch-300.avif 300w, ../media/fit/xp3-brunch-600.avif 600w" sizes="(max-width: 720px) min(72vw, 260px), 268px"><source type="image/webp" srcset="../media/fit/xp3-brunch-300.webp 300w, ../media/fit/xp3-brunch-600.webp 600w" sizes="(max-width: 720px) min(72vw, 260px), 268px"><img src="../media/fit/xp3-brunch-600.webp" width="600" height="900" alt="Guests around a pool terrace above the city" data-i18n-alt="xp.alt.4" loading="lazy" decoding="async"></picture>
               <div class="label">
                 <p class="xp-when" data-i18n="v4.xp.4d">Brunch to sunset</p>
@@ -1165,13 +1161,22 @@ html { scroll-padding-top: calc(var(--bar) + 34px); }
                 <a class="svc-more" href="#brief" data-exp="v4.xp.4t" aria-describedby="xp-4-t"><span data-i18n="xp.reserve">Reserve</span><span class="arrow-glyph" aria-hidden="true"></span></a>
               </div>
             </article>
-            <article class="photo-card svc-card" data-rise style="--d:.06s">
+            <article class="photo-card svc-card" data-rise style="--d:0s">
               <picture><source type="image/avif" srcset="../media/fit/xp3-nightscapes-300.avif 300w, ../media/fit/xp3-nightscapes-600.avif 600w" sizes="(max-width: 720px) min(72vw, 260px), 268px"><source type="image/webp" srcset="../media/fit/xp3-nightscapes-300.webp 300w, ../media/fit/xp3-nightscapes-600.webp 600w" sizes="(max-width: 720px) min(72vw, 260px), 268px"><img src="../media/fit/xp3-nightscapes-600.webp" width="600" height="900" alt="Medellín&#x27;s lights under a purple dusk" data-i18n-alt="xp.alt.5" loading="lazy" decoding="async"></picture>
               <div class="label">
                 <p class="xp-when" data-i18n="v4.xp.5d">3 hours</p>
                 <h3 id="xp-5-t" data-i18n="xp.5n">Nightscapes Medellín</h3>
                 <p data-i18n="xp.5k">The best viewpoints · Dusk · City lights</p>
                 <a class="svc-more" href="#brief" data-exp="v4.xp.5t" aria-describedby="xp-5-t"><span data-i18n="xp.reserve">Reserve</span><span class="arrow-glyph" aria-hidden="true"></span></a>
+              </div>
+            </article>
+            <article class="photo-card svc-card" data-rise style="--d:.06s">
+              <div class="ask-art is-icon"><svg class="ask-icon" viewBox="0 0 21 21" aria-hidden="true"><path d="M8.3 10.14A2.7 2.7 0 1 1 10.86 12.7A3.7 3.7 0 1 1 8.3 10.14z"/><path d="M12.9 8.1L17.2 3.8M16.2 2.8l2 2"/><path d="M12.9 8.1L7.5 13.5"/><path d="M6.8 13.1a1.1 1.1 0 1 0 2.2 0a1.1 1.1 0 1 0-2.2 0"/></svg></div>
+              <div class="label">
+                <p class="xp-when" data-i18n="v4.xp.7d">Thursday night</p>
+                <h3 id="xp-7-t" data-i18n="xp.7n">Flamenco Thursday Night</h3>
+                <p data-i18n="xp.7k">Live guitar · Song · Dance</p>
+                <a class="svc-more" href="#brief" data-exp="v4.xp.7t" aria-describedby="xp-7-t"><span data-i18n="xp.reserve">Reserve</span><span class="arrow-glyph" aria-hidden="true"></span></a>
               </div>
             </article>
             <article class="photo-card svc-card" data-rise style="--d:.12s">
@@ -1513,6 +1518,8 @@ html { scroll-padding-top: calc(var(--bar) + 34px); }
       "v4.xp.5t": "Nightscapes Medellín: City Lights",
       "v4.xp.6d": "Your dates",
       "v4.xp.6t": "Tailor-Made VIP Services",
+      "v4.xp.7d": "Thursday night",
+      "v4.xp.7t": "Flamenco Thursday Night",
       "v4.xp.prefill": "I'm interested in:",
       "wa.hello": "Hello. I would like to plan a stay in Medellín.",
       "xp.1k": "Dinner · Drinks · Provenza's best clubs",
@@ -1527,6 +1534,8 @@ html { scroll-padding-top: calc(var(--bar) + 34px); }
       "xp.5n": "Nightscapes Medellín",
       "xp.6k": "Staffed villas · Private security · Helicopters · A yacht in Guatapé",
       "xp.6n": "Tailor-Made VIP Services",
+      "xp.7k": "Live guitar · Song · Dance",
+      "xp.7n": "Flamenco Thursday Night",
       "xp.alt.3": "A paisa lunch: beans, egg, chorizo, morcilla and arepa",
       "xp.alt.4": "Guests around a pool terrace above the city",
       "xp.alt.5": "Medellín's lights under a purple dusk",
@@ -1663,6 +1672,8 @@ html { scroll-padding-top: calc(var(--bar) + 34px); }
       "v4.xp.5t": "Nightscapes Medellín: luces de la ciudad",
       "v4.xp.6d": "Tus fechas",
       "v4.xp.6t": "Servicios VIP a medida",
+      "v4.xp.7d": "Jueves en la noche",
+      "v4.xp.7t": "Jueves de flamenco",
       "v4.xp.prefill": "Me interesa:",
       "wa.hello": "Hola. Quiero planear una estancia en Medellín.",
       "xp.1k": "Cena · Cócteles · Los mejores clubes de Provenza",
@@ -1677,6 +1688,8 @@ html { scroll-padding-top: calc(var(--bar) + 34px); }
       "xp.5n": "Nightscapes Medellín",
       "xp.6k": "Villas con personal · Seguridad privada · Helicópteros · Un yate en Guatapé",
       "xp.6n": "Servicios VIP a medida",
+      "xp.7k": "Guitarra en vivo · Cante · Baile",
+      "xp.7n": "Jueves de flamenco",
       "xp.alt.3": "Un almuerzo paisa: frijoles, huevo, chorizo, morcilla y arepa",
       "xp.alt.4": "Huéspedes en una terraza con piscina sobre la ciudad",
       "xp.alt.5": "Las luces de Medellín bajo un atardecer violeta",
@@ -2029,6 +2042,23 @@ html { scroll-padding-top: calc(var(--bar) + 34px); }
   if (band) counter.observe(band);
 })();
 
+  </script>
+  <script>
+(function () {
+  // From 1280px the experiences rail is laid out as a plain grid (display: contents), so it has no box of its own
+  // for the page's reveal-on-scroll to watch; its cards are revealed one by one instead.
+  var cards = [].slice.call(document.querySelectorAll("#xp-rail > [data-rise]"));
+  if (!cards.length) return;
+  if (!("IntersectionObserver" in window)) { cards.forEach(function (c) { c.classList.add("is-in"); }); return; }
+  var io = new IntersectionObserver(function (entries) {
+    entries.forEach(function (e) {
+      if (!e.isIntersecting) return;
+      e.target.classList.add("is-in");
+      io.unobserve(e.target);
+    });
+  }, { rootMargin: "0px 0px -4% 0px", threshold: 0.04 });
+  cards.forEach(function (c) { io.observe(c); });
+})();
   </script>
 </body>
 </html>

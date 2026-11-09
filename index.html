@@ -246,8 +246,8 @@ main, .site-footer { position: relative; z-index: 1; }
 }
 .desktop-nav a:hover { color: var(--hueso); }
 .desktop-nav a:hover::after { transform: scaleX(1); transform-origin: left center; }
-.desktop-nav a[href="#blog"], .sidebar-nav a[href="#blog"] { color: var(--oro); }
-.desktop-nav a[href="#blog"]:hover { color: var(--oro-claro); }
+.desktop-nav a[data-i18n="nav.blog"], .sidebar-nav a[href$="#blog"] { color: var(--oro); }
+.desktop-nav a[data-i18n="nav.blog"]:hover { color: var(--oro-claro); }
 .header-actions { display: flex; align-items: center; gap: 13px; margin-left: 21px; }
 .language-switch { display: flex; align-items: center; gap: 0; font-family: var(--f-title); font-size: 13px; font-weight: 300; }
 .language-switch button {
@@ -379,9 +379,9 @@ main, .site-footer { position: relative; z-index: 1; }
 }
 .pill:hover { background: var(--hueso); border-color: var(--hueso); color: var(--obsidiana); }
 .pill:hover::after { translate: 3px 0; }
-/* The quiet second button in the hero: glass, smaller, beside the main one */
+/* The quiet second button: glass outline, the same size as the gold one beside it */
 .see.see-ghost {
-  min-height: 44px; padding: 0 21px; font-size: var(--type-small);
+  min-height: 55px; padding: 0 34px; font-size: var(--type-body);
   border-color: color-mix(in oklch, var(--hueso) 55%, transparent);
   background: color-mix(in oklch, var(--obsidiana) 32%, transparent); color: var(--hueso);
   -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px);
@@ -570,6 +570,8 @@ main, .site-footer { position: relative; z-index: 1; }
 .band .xp-card .xp-text { margin-top: 8px; color: var(--plata); font-size: 13px; line-height: 1.5; }
 .xp-more { display: flex; justify-content: center; margin-top: 55px; }
 .xp-link .arrow-glyph { color: var(--oro-claro); }
+.xp-link .xp-art { width: 144px; aspect-ratio: 1 / 1; }
+.xp-grid > li:last-child:nth-child(odd) { grid-column: 1 / -1; }
 .xp-link:hover { border-color: color-mix(in oklch, var(--oro) 45%, transparent); }
 .xp-link:hover .arrow-glyph { translate: 3px 0; }
 @media (hover: hover) { .xp-link:hover img { transform: scale(1.06); } }
@@ -920,7 +922,7 @@ main, .site-footer { position: relative; z-index: 1; }
   .reasons { grid-template-columns: 1fr; gap: 21px; }
   .xp-grid { grid-template-columns: 1fr; }
   .xp-link { grid-template-columns: 89px minmax(0, 1fr) auto; gap: 13px; padding: 8px 13px 8px 8px; border-radius: 17px; }
-  .xp-link picture { width: 89px; }
+  .xp-link picture, .xp-link .xp-art { width: 89px; }
   .reasons li { padding-top: 13px; }
   .stats-grid { grid-template-columns: 1fr 1fr; row-gap: 34px; }
   .stats-grid article:nth-child(3)::before { display: none; }
@@ -983,7 +985,7 @@ main, .site-footer { position: relative; z-index: 1; }
         <a href="#destinations" data-i18n="nav.dest">Destinations</a>
         <a href="services/" data-i18n="nav.svc">Services</a>
         <a href="experiences/" data-i18n="nav.exp">Experiences</a>
-        <a href="#blog" data-i18n="nav.blog">Blog</a>
+        <a href="./#blog" data-i18n="nav.blog">Blog</a>
       </nav>
       <div class="header-actions">
         <div class="language-switch" aria-label="Language" data-i18n-aria="lang.switch">
@@ -1325,6 +1327,17 @@ main, .site-footer { position: relative; z-index: 1; }
                 <p class="xp-time" data-i18n="v4.xp.5d">3 hours</p>
                 <h3 data-i18n="v4.xp.5t">Nightscapes Medellín: City Lights</h3>
                 <p class="xp-text" data-i18n="v4.xp.5p">The city's best viewpoints, right as the lights come on.</p>
+              </div>
+              <span class="arrow-glyph" aria-hidden="true"></span>
+            </a>
+          </li>
+          <li class="xp-card" data-rise style="--d:0.00s">
+            <a class="xp-link" href="#brief" data-exp="v4.xp.7t">
+              <span class="ask-art xp-art" aria-hidden="true"><svg class="ask-icon" viewBox="0 0 21 21"><path d="M8.3 10.14A2.7 2.7 0 1 1 10.86 12.7A3.7 3.7 0 1 1 8.3 10.14z"/><path d="M12.9 8.1L17.2 3.8M16.2 2.8l2 2"/><path d="M12.9 8.1L7.5 13.5"/><path d="M6.8 13.1a1.1 1.1 0 1 0 2.2 0a1.1 1.1 0 1 0-2.2 0"/></svg></span>
+              <div class="xp-body">
+                <p class="xp-time" data-i18n="v4.xp.7d">Thursday night</p>
+                <h3 data-i18n="v4.xp.7t">Flamenco Thursday Night</h3>
+                <p class="xp-text" data-i18n="v4.xp.7p">A night of live flamenco: guitar, song and dance.</p>
               </div>
               <span class="arrow-glyph" aria-hidden="true"></span>
             </a>
@@ -1940,6 +1953,9 @@ main, .site-footer { position: relative; z-index: 1; }
       "v4.xp.6t": "Tailor-Made VIP Services",
       "v4.xp.6d": "Your dates",
       "v4.xp.6p": "Staffed villas, private security, helicopters or a yacht in Guatapé. Built around you.",
+      "v4.xp.7t": "Flamenco Thursday Night",
+      "v4.xp.7d": "Thursday night",
+      "v4.xp.7p": "A night of live flamenco: guitar, song and dance.",
       "v4.blog.dos": "Do's and don'ts in Medellín",
       "v4.blog.dos.p": "Small habits that make the trip easier.",
       "v4.blog.metro": "Getting around on public transport",
@@ -2231,6 +2247,9 @@ main, .site-footer { position: relative; z-index: 1; }
       "v4.xp.6t": "Servicios VIP a medida",
       "v4.xp.6d": "Tus fechas",
       "v4.xp.6p": "Villas con personal, seguridad privada, helicóptero o yate en Guatapé. Pensado para ti.",
+      "v4.xp.7t": "Jueves de flamenco",
+      "v4.xp.7d": "Jueves en la noche",
+      "v4.xp.7p": "Una noche de flamenco en vivo: guitarra, cante y baile.",
       "v4.blog.dos": "Qué hacer y qué no en Medellín",
       "v4.blog.dos.p": "Pequeños hábitos que hacen el viaje más fácil.",
       "v4.blog.metro": "Cómo moverse en transporte público",
