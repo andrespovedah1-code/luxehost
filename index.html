@@ -400,6 +400,18 @@ main, .site-footer { position: relative; z-index: 1; }
 }
 .band .photo-card .label p { margin: 8px 0 0; max-width: 34ch; color: var(--plata); font-size: var(--type-meta); line-height: 1.55; }
 .photo-card .pill { margin-top: auto; }
+/* "See more" on the service cards: a quiet text link, as on the services page; the whole card opens the service */
+.card-more {
+  display: inline-flex; align-items: center; gap: 8px; min-height: 44px; margin-top: auto;
+  color: var(--hueso); font-size: 14px; letter-spacing: 0.04em; text-decoration: none; transition: color var(--dur) var(--ease);
+}
+.card-more::before { content: ""; position: absolute; inset: 0; z-index: 2; }
+.card-more .arrow-glyph { transition: translate var(--dur) var(--ease); }
+.photo-card:hover .card-more, .card-more:focus-visible { color: var(--oro-claro); }
+.photo-card:hover .card-more .arrow-glyph { translate: 3px 0; }
+.card-more:focus-visible { outline: none; }
+.photo-card:has(.card-more:focus-visible) { outline: 1px solid var(--oro-claro); outline-offset: 3px; border-radius: var(--radius); }
+.band .photo-card .label:has(.card-more) p { margin-bottom: 8px; }
 .band .photo-card .label:has(.pill) p { margin-bottom: 21px; }
 .ask-art {
   display: grid; place-items: center;
@@ -561,7 +573,7 @@ main, .site-footer { position: relative; z-index: 1; }
 .guest:nth-child(n+3) { --d: .16s; }
 
 /* =========================================================================
-   The week: one big line over the city at dusk, and where the week goes
+   The week: one big line over the city at dusk, and everything we handle
    ========================================================================= */
 .band--photo { isolation: isolate; overflow: hidden; }
 .band + .band--photo > .wrap, .band--photo + .band > .wrap { border-top: 0; }
@@ -591,13 +603,13 @@ main, .site-footer { position: relative; z-index: 1; }
 }
 .week-title span { display: block; }
 .week-title .wk-gold { color: var(--oro-claro); }
-.week-stops {
+.week-perks {
   display: flex; flex-wrap: wrap; align-items: baseline; margin-top: 34px;
   color: color-mix(in oklch, var(--hueso) 92%, transparent); font-size: clamp(17px, 1.45vw, 22px); line-height: 1.6;
   text-shadow: 0 1px 13px rgba(11, 11, 11, 0.75);
 }
-.week-stops li { white-space: nowrap; }
-.week-stops li + li::before { content: "\00b7"; margin: 0 0.6em; color: var(--oro-claro); }
+.week-perks li { white-space: nowrap; }
+.week-perks li + li::before { content: "\00b7"; margin: 0 0.6em; color: var(--oro-claro); }
 .week-hero .see { margin-top: 34px; }
 
 /* =========================================================================
@@ -887,7 +899,7 @@ main, .site-footer { position: relative; z-index: 1; }
   .band--photo > .wrap { min-height: 0; padding-block: var(--s-55); }
   /* the photo band keeps its height on phones too */
   #week > .wrap { min-height: 560px; }
-  .week-stops { margin-top: 21px; }
+  .week-perks { margin-top: 21px; }
   .week-hero .see { margin-top: 29px; }
   .subscribe { padding: 21px; }
   .sub-fields { grid-template-columns: 1fr; }
@@ -938,7 +950,7 @@ main, .site-footer { position: relative; z-index: 1; }
       </button>
       <nav class="desktop-nav" aria-label="Main" data-i18n-aria="nav.main">
         <a href="#destinations" data-i18n="nav.dest">Destinations</a>
-        <a href="#services" data-i18n="nav.svc">Services</a>
+        <a href="services/" data-i18n="nav.svc">Services</a>
         <a href="#experiences" data-i18n="nav.exp">Experiences</a>
         <a href="#blog" data-i18n="nav.blog">Blog</a>
       </nav>
@@ -996,7 +1008,7 @@ main, .site-footer { position: relative; z-index: 1; }
         <h1 data-i18n-html="hero.h1">Your week in <em>Medellín</em>.</h1>
         <p class="sub" data-i18n="hero.sub">Private stays in Medellín, airport pickup, and experiences with partners we know and trust.</p>
         <div class="hero-actions">
-          <a class="see" href="#services" data-i18n="hero.link">See our services</a>
+          <a class="see" href="services/" data-i18n="hero.link">See our services</a>
           <a class="see see-ghost" href="#brief" data-exp="consult.item" data-i18n="hero.consult">Book a consultation</a>
         </div>
       </div>
@@ -1077,137 +1089,137 @@ main, .site-footer { position: relative; z-index: 1; }
           <article class="photo-card" data-rise style="--d:0s">
             <picture><source type="image/avif" srcset="./media/fit/st-villa-260.avif 260w, ./media/fit/st-villa-520.avif 520w" sizes="(max-width: 800px) 70vw, 260px"><source type="image/webp" srcset="./media/fit/st-villa-260.webp 260w, ./media/fit/st-villa-520.webp 520w" sizes="(max-width: 800px) 70vw, 260px"><img src="./media/fit/st-villa-520.webp" width="520" height="500" alt="A modern villa in the hills at dusk" data-i18n-alt="v3.alt.villa" loading="lazy" decoding="async"></picture>
             <div class="label">
-              <h3 data-i18n="v3.svc.villa">Private villas</h3>
+              <h3 id="svc-v3-svc-villa-t" data-i18n="v3.svc.villa">Private villas</h3>
               <p data-i18n="v3.svc.villa.p">Handpicked homes. Pools, views, total privacy.</p>
-              <a class="pill" href="services/#stay" data-i18n="v3.svc.villa.btn">See villas</a>
+              <a class="card-more" href="services/#stay" aria-describedby="svc-v3-svc-villa-t"><span data-i18n="svc.more">See more</span><span class="arrow-glyph" aria-hidden="true"></span></a>
             </div>
           </article>
           <article class="photo-card" data-rise style="--d:.05s">
             <picture><source type="image/avif" srcset="./media/fit/v41-dinner-260.avif 260w, ./media/fit/v41-dinner-520.avif 520w" sizes="(max-width: 800px) 70vw, 260px"><source type="image/webp" srcset="./media/fit/v41-dinner-260.webp 260w, ./media/fit/v41-dinner-520.webp 520w" sizes="(max-width: 800px) 70vw, 260px"><img src="./media/fit/v41-dinner-520.webp" width="520" height="500" alt="Pork belly plated with edible flowers" data-i18n-alt="v4.alt.chef" loading="lazy" decoding="async"></picture>
             <div class="label">
-              <h3 data-i18n="v4.svc.chef">Private chef &amp; catering</h3>
+              <h3 id="svc-v4-svc-chef-t" data-i18n="v4.svc.chef">Private chef &amp; catering</h3>
               <p data-i18n="v4.svc.chef.p">Teppanyaki, asado, tasting menus, you name it. At your villa.</p>
-              <a class="pill" href="#brief" data-i18n="svc.ask">Ask us</a>
+              <a class="card-more" href="services/private-chef/" aria-describedby="svc-v4-svc-chef-t"><span data-i18n="svc.more">See more</span><span class="arrow-glyph" aria-hidden="true"></span></a>
             </div>
           </article>
           <article class="photo-card" data-rise style="--d:.1s">
             <picture><source type="image/avif" srcset="./media/fit/hm-table-260.avif 260w, ./media/fit/hm-table-520.avif 520w" sizes="(max-width: 800px) 70vw, 260px"><source type="image/webp" srcset="./media/fit/hm-table-260.webp 260w, ./media/fit/hm-table-520.webp 520w" sizes="(max-width: 800px) 70vw, 260px"><img src="./media/fit/hm-table-520.webp" width="520" height="500" alt="Set tables in a restaurant with a patterned block wall" data-i18n-alt="v2.alt.dine" loading="lazy" decoding="async"></picture>
             <div class="label">
-              <h3 data-i18n="v3.svc.dine">Dining</h3>
+              <h3 id="svc-v3-svc-dine-t" data-i18n="v3.svc.dine">Dining</h3>
               <p data-i18n="v3.svc.dine.p">The best tables in town, booked.</p>
-              <a class="pill" href="#brief" data-i18n="svc.ask">Ask us</a>
+              <a class="card-more" href="services/dining/" aria-describedby="svc-v3-svc-dine-t"><span data-i18n="svc.more">See more</span><span class="arrow-glyph" aria-hidden="true"></span></a>
             </div>
           </article>
           <article class="photo-card" data-rise style="--d:.15s">
             <picture><source type="image/avif" srcset="./media/fit/hm-pool-260.avif 260w, ./media/fit/hm-pool-520.avif 520w" sizes="(max-width: 800px) 70vw, 260px"><source type="image/webp" srcset="./media/fit/hm-pool-260.webp 260w, ./media/fit/hm-pool-520.webp 520w" sizes="(max-width: 800px) 70vw, 260px"><img src="./media/fit/hm-pool-520.webp" width="520" height="500" alt="A rooftop pool with water jets above El Poblado" data-i18n-alt="v3.alt.roof" loading="lazy" decoding="async"></picture>
             <div class="label">
-              <h3 data-i18n="v3.svc.roof">Rooftops</h3>
+              <h3 id="svc-v3-svc-roof-t" data-i18n="v3.svc.roof">Rooftops</h3>
               <p data-i18n="v3.svc.roof.p">Sunsets, cocktails, the city at your feet.</p>
-              <a class="pill" href="#brief" data-i18n="svc.ask">Ask us</a>
+              <a class="card-more" href="services/rooftops/" aria-describedby="svc-v3-svc-roof-t"><span data-i18n="svc.more">See more</span><span class="arrow-glyph" aria-hidden="true"></span></a>
             </div>
           </article>
           <article class="photo-card" data-rise style="--d:.2s">
             <picture><source type="image/avif" srcset="./media/fit/hm-night-260.avif 260w, ./media/fit/hm-night-520.avif 520w" sizes="(max-width: 800px) 70vw, 260px"><source type="image/webp" srcset="./media/fit/hm-night-260.webp 260w, ./media/fit/hm-night-520.webp 520w" sizes="(max-width: 800px) 70vw, 260px"><img src="./media/fit/hm-night-520.webp" width="520" height="500" alt="A red neon sign glowing on a club wall" data-i18n-alt="v5.alt.neon" loading="lazy" decoding="async"></picture>
             <div class="label">
-              <h3 data-i18n="v4.svc.night">Nightlife</h3>
+              <h3 id="svc-v4-svc-night-t" data-i18n="v4.svc.night">Nightlife</h3>
               <p data-i18n="v4.svc.night.p">The right clubs and bars, a table waiting, a driver outside.</p>
-              <a class="pill" href="#brief" data-i18n="svc.ask">Ask us</a>
+              <a class="card-more" href="services/#night" aria-describedby="svc-v4-svc-night-t"><span data-i18n="svc.more">See more</span><span class="arrow-glyph" aria-hidden="true"></span></a>
             </div>
           </article>
           <article class="photo-card" data-rise style="--d:.25s">
             <picture><source type="image/avif" srcset="./media/fit/hm-van-260.avif 260w, ./media/fit/hm-van-520.avif 520w" sizes="(max-width: 800px) 70vw, 260px"><source type="image/webp" srcset="./media/fit/hm-van-260.webp 260w, ./media/fit/hm-van-520.webp 520w" sizes="(max-width: 800px) 70vw, 260px"><img src="./media/fit/hm-van-520.webp" width="520" height="500" alt="A black Mercedes van on a city street at dusk" data-i18n-alt="v3.alt.driver" loading="lazy" decoding="async"></picture>
             <div class="label">
-              <h3 data-i18n="v3.svc.driver">Private transportation</h3>
+              <h3 id="svc-v3-svc-driver-t" data-i18n="v3.svc.driver">Private transportation</h3>
               <p data-i18n="v3.svc.driver.p">Airport pickup and a driver, day or night.</p>
-              <a class="pill" href="services/#move" data-i18n="svc.trans.btn">See transport</a>
+              <a class="card-more" href="services/private-transportation/" aria-describedby="svc-v3-svc-driver-t"><span data-i18n="svc.more">See more</span><span class="arrow-glyph" aria-hidden="true"></span></a>
             </div>
           </article>
           <article class="photo-card" data-rise style="--d:.3s">
             <picture><source type="image/avif" srcset="./media/fit/st-heli-260.avif 260w, ./media/fit/st-heli-520.avif 520w" sizes="(max-width: 800px) 70vw, 260px"><source type="image/webp" srcset="./media/fit/st-heli-260.webp 260w, ./media/fit/st-heli-520.webp 520w" sizes="(max-width: 800px) 70vw, 260px"><img src="./media/fit/st-heli-520.webp" width="520" height="500" alt="The Andes from the air, clouds over the valley" data-i18n-alt="v4.alt.heli" loading="lazy" decoding="async"></picture>
             <div class="label">
-              <h3 data-i18n="v4.svc.heli">Helicopter tours &amp; trips</h3>
+              <h3 id="svc-v4-svc-heli-t" data-i18n="v4.svc.heli">Helicopter tours &amp; trips</h3>
               <p data-i18n="v4.svc.heli.p">The valley and Guatapé from the air.</p>
-              <a class="pill" href="#brief" data-i18n="svc.ask">Ask us</a>
+              <a class="card-more" href="services/helicopter-tours/" aria-describedby="svc-v4-svc-heli-t"><span data-i18n="svc.more">See more</span><span class="arrow-glyph" aria-hidden="true"></span></a>
             </div>
           </article>
           <article class="photo-card" data-rise style="--d:.35s">
             <picture><source type="image/avif" srcset="./media/fit/hm-botero-260.avif 260w, ./media/fit/hm-botero-520.avif 520w" sizes="(max-width: 800px) 70vw, 260px"><source type="image/webp" srcset="./media/fit/hm-botero-260.webp 260w, ./media/fit/hm-botero-520.webp 520w" sizes="(max-width: 800px) 70vw, 260px"><img src="./media/fit/hm-botero-520.webp" width="520" height="500" alt="A Botero torso sculpture at sunset" data-i18n-alt="v6.alt.tours" loading="lazy" decoding="async"></picture>
             <div class="label">
-              <h3 data-i18n="v3.svc.tours">Private tours &amp; sightseeing</h3>
+              <h3 id="svc-v3-svc-tours-t" data-i18n="v3.svc.tours">Private tours &amp; sightseeing</h3>
               <p data-i18n="v3.svc.tours.p">Comuna 13, Botero, coffee farms. Your guide, your pace.</p>
-              <a class="pill" href="#brief" data-i18n="svc.ask">Ask us</a>
+              <a class="card-more" href="services/private-tours/" aria-describedby="svc-v3-svc-tours-t"><span data-i18n="svc.more">See more</span><span class="arrow-glyph" aria-hidden="true"></span></a>
             </div>
           </article>
           <article class="photo-card" data-rise style="--d:.4s">
             <picture><source type="image/avif" srcset="./media/fit/st-adventure-260.avif 260w, ./media/fit/st-adventure-520.avif 520w" sizes="(max-width: 800px) 70vw, 260px"><source type="image/webp" srcset="./media/fit/st-adventure-260.webp 260w, ./media/fit/st-adventure-520.webp 520w" sizes="(max-width: 800px) 70vw, 260px"><img src="./media/fit/st-adventure-520.webp" width="520" height="500" alt="Mountain bikers above the valley" data-i18n-alt="v4.alt.adventure" loading="lazy" decoding="async"></picture>
             <div class="label">
-              <h3 data-i18n="v3.svc.adv">Adventure</h3>
+              <h3 id="svc-v3-svc-adv-t" data-i18n="v3.svc.adv">Adventure</h3>
               <p data-i18n="v3.svc.adv.p">Paragliding, ATVs, kayaking, paintball, shooting range.</p>
-              <a class="pill" href="#brief" data-i18n="svc.ask">Ask us</a>
+              <a class="card-more" href="services/#out" aria-describedby="svc-v3-svc-adv-t"><span data-i18n="svc.more">See more</span><span class="arrow-glyph" aria-hidden="true"></span></a>
             </div>
           </article>
           <article class="photo-card" data-rise style="--d:.45s">
             <picture><source type="image/avif" srcset="./media/fit/st-water-260.avif 260w, ./media/fit/st-water-520.avif 520w" sizes="(max-width: 800px) 70vw, 260px"><source type="image/webp" srcset="./media/fit/st-water-260.webp 260w, ./media/fit/st-water-520.webp 520w" sizes="(max-width: 800px) 70vw, 260px"><img src="./media/fit/st-water-520.webp" width="520" height="500" alt="An island on Guatapé's lake" data-i18n-alt="v4.alt.water" loading="lazy" decoding="async"></picture>
             <div class="label">
-              <h3 data-i18n="v4.svc.water">Guatapé on the water</h3>
+              <h3 id="svc-v4-svc-water-t" data-i18n="v4.svc.water">Guatapé on the water</h3>
               <p data-i18n="v4.svc.water.p">Boats, jet skis and wakeboarding on the lake.</p>
-              <a class="pill" href="#brief" data-i18n="svc.ask">Ask us</a>
+              <a class="card-more" href="services/guatape-on-the-water/" aria-describedby="svc-v4-svc-water-t"><span data-i18n="svc.more">See more</span><span class="arrow-glyph" aria-hidden="true"></span></a>
             </div>
           </article>
           <article class="photo-card" data-rise style="--d:.5s">
             <picture><source type="image/avif" srcset="./media/fit/hm-nature-260.avif 260w, ./media/fit/hm-nature-520.avif 520w" sizes="(max-width: 800px) 70vw, 260px"><source type="image/webp" srcset="./media/fit/hm-nature-260.webp 260w, ./media/fit/hm-nature-520.webp 520w" sizes="(max-width: 800px) 70vw, 260px"><img src="./media/fit/hm-nature-520.webp" width="520" height="500" alt="A motmot with a turquoise crown on a branch" data-i18n-alt="v3.alt.birds" loading="lazy" decoding="async"></picture>
             <div class="label">
-              <h3 data-i18n="v3.svc.nat">Nature &amp; eco-tourism</h3>
+              <h3 id="svc-v3-svc-nat-t" data-i18n="v3.svc.nat">Nature &amp; eco-tourism</h3>
               <p data-i18n="v3.svc.nat.p">Horse riding, eco tours, bird watching.</p>
-              <a class="pill" href="#brief" data-i18n="svc.ask">Ask us</a>
+              <a class="card-more" href="services/#nature" aria-describedby="svc-v3-svc-nat-t"><span data-i18n="svc.more">See more</span><span class="arrow-glyph" aria-hidden="true"></span></a>
             </div>
           </article>
           <article class="photo-card" data-rise style="--d:.55s">
             <picture><source type="image/avif" srcset="./media/fit/st-festival-260.avif 260w, ./media/fit/st-festival-520.avif 520w" sizes="(max-width: 800px) 70vw, 260px"><source type="image/webp" srcset="./media/fit/st-festival-260.webp 260w, ./media/fit/st-festival-520.webp 520w" sizes="(max-width: 800px) 70vw, 260px"><img src="./media/fit/st-festival-520.webp" width="520" height="500" alt="Decorated jeeps in a festival parade" data-i18n-alt="v3.alt.fest" loading="lazy" decoding="async"></picture>
             <div class="label">
-              <h3 data-i18n="v3.svc.fest">Festivals</h3>
+              <h3 id="svc-v3-svc-fest-t" data-i18n="v3.svc.fest">Festivals</h3>
               <p data-i18n="v3.svc.fest.p">Feria de las Flores, Colombiamoda, EDC. We plan the week around them.</p>
-              <a class="pill" href="#brief" data-i18n="svc.ask">Ask us</a>
+              <a class="card-more" href="services/#fest" aria-describedby="svc-v3-svc-fest-t"><span data-i18n="svc.more">See more</span><span class="arrow-glyph" aria-hidden="true"></span></a>
             </div>
           </article>
           <article class="photo-card ask-card" data-rise style="--d:.6s">
             <div class="ask-art is-icon"><svg class="ask-icon" viewBox="0 0 21 21" aria-hidden="true"><path d="M3.5 15.5h14"/><path d="M5 15.5a5.5 5.5 0 0 1 11 0"/><path d="M10.5 10V8.5M9 8.5h3"/></svg></div>
             <div class="label">
-              <h3 data-i18n="svc.host">Bilingual host</h3>
+              <h3 id="svc-svc-host-t" data-i18n="svc.host">Bilingual host</h3>
               <p data-i18n="svc.host.p">One host for all your requests, in English or Spanish.</p>
-              <a class="pill" href="#brief" data-i18n="svc.ask">Ask us</a>
+              <a class="card-more" href="services/bilingual-host/" aria-describedby="svc-svc-host-t"><span data-i18n="svc.more">See more</span><span class="arrow-glyph" aria-hidden="true"></span></a>
             </div>
           </article>
           <article class="photo-card ask-card" data-rise style="--d:.65s">
             <div class="ask-art is-lang"><span class="ask-lang" aria-hidden="true"><span>EN</span><i></i><span>ES</span></span></div>
             <div class="label">
-              <h3 data-i18n="v3.svc.lang">Interpreter</h3>
+              <h3 id="svc-v3-svc-lang-t" data-i18n="v3.svc.lang">Interpreter</h3>
               <p data-i18n="v3.svc.lang.p">English and Spanish, by your side. Business or pleasure.</p>
-              <a class="pill" href="#brief" data-i18n="svc.ask">Ask us</a>
+              <a class="card-more" href="services/interpreter/" aria-describedby="svc-v3-svc-lang-t"><span data-i18n="svc.more">See more</span><span class="arrow-glyph" aria-hidden="true"></span></a>
             </div>
           </article>
           <article class="photo-card ask-card" data-rise style="--d:.7s">
             <div class="ask-art is-icon"><svg class="ask-icon" viewBox="0 0 21 21" aria-hidden="true"><path d="M4.5 7.5h12l-1 10h-10z"/><path d="M8 7.5V6.2a2.5 2.5 0 0 1 5 0v1.3"/></svg></div>
             <div class="label">
-              <h3 data-i18n="svc.shop">Personal shopper</h3>
+              <h3 id="svc-svc-shop-t" data-i18n="svc.shop">Personal shopper</h3>
               <p data-i18n="v3.svc.shop.p">Local designers and the best boutiques, with an expert eye.</p>
-              <a class="pill" href="#brief" data-i18n="svc.ask">Ask us</a>
+              <a class="card-more" href="services/personal-shopper/" aria-describedby="svc-svc-shop-t"><span data-i18n="svc.more">See more</span><span class="arrow-glyph" aria-hidden="true"></span></a>
             </div>
           </article>
           <article class="photo-card ask-card" data-rise style="--d:.75s">
             <div class="ask-art is-mono"><svg viewBox="1115 512 740 716" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M1196.50,1225.47C1163.36,1223.20 1124.59,1217.99 1119.14,1215.08C1115.58,1213.17 1114.76,1210.51 1116.92,1207.85C1118.81,1205.51 1118.81,1205.51 1145.69,1205.85C1196.69,1206.48 1222.23,1202.25 1270.50,1185.18C1301.23,1174.32 1328.54,1159.42 1353.60,1139.83C1358.06,1136.35 1367.96,1128.78 1375.59,1123.00C1406.93,1099.30 1441.64,1064.40 1466.12,1032.00C1471.32,1025.12 1477.63,1016.80 1480.16,1013.50C1488.20,1002.98 1501.81,982.31 1506.64,973.26C1509.22,968.44 1512.82,962.26 1514.66,959.51C1516.50,956.77 1518.00,954.10 1518.00,953.58C1518.00,953.06 1519.72,949.91 1521.83,946.57C1527.82,937.06 1532.44,929.11 1536.49,921.34C1540.60,913.42 1540.47,910.42 1535.75,904.42C1534.58,902.92 1526.33,890.63 1517.41,877.10C1508.50,863.57 1498.89,849.12 1496.07,845.00C1489.58,835.51 1476.57,816.08 1447.50,772.47C1434.85,753.48 1421.58,733.73 1418.00,728.56C1414.42,723.39 1407.24,712.94 1402.04,705.33C1396.84,697.72 1387.62,685.03 1381.54,677.13C1375.47,669.23 1368.57,660.23 1366.21,657.13C1359.00,647.66 1347.59,635.71 1341.74,631.50C1332.49,624.85 1330.79,615.93 1338.23,613.10C1344.36,610.77 1385.92,614.46 1398.00,618.40C1412.73,623.21 1418.19,625.72 1435.00,635.41C1457.66,648.48 1471.30,663.81 1497.78,706.00C1505.53,718.34 1512.01,728.11 1532.79,758.75C1536.81,764.66 1543.07,774.45 1546.71,780.50C1550.36,786.55 1557.47,797.35 1562.53,804.50C1567.59,811.65 1574.38,821.55 1577.61,826.50C1583.72,835.83 1586.33,837.63 1589.71,834.83C1591.86,833.04 1600.55,819.56 1606.68,808.50C1609.42,803.55 1615.41,793.20 1619.98,785.50C1628.63,770.93 1642.00,747.13 1642.00,746.31C1642.00,746.05 1643.63,743.06 1645.63,739.67C1648.99,733.95 1652.48,727.71 1672.81,691.00C1681.28,675.71 1689.06,660.90 1701.16,637.06C1711.20,617.26 1713.04,615.40 1724.11,613.83C1728.89,613.15 1751.48,612.95 1788.00,613.25C1848.17,613.75 1849.42,613.85 1850.61,618.60C1852.07,624.41 1848.34,627.00 1838.52,627.00C1818.53,627.00 1794.41,637.11 1767.50,656.78C1751.42,668.53 1718.39,701.49 1706.34,717.82C1703.22,722.04 1698.78,727.98 1696.48,731.00C1694.17,734.02 1688.28,742.58 1683.38,750.00C1678.48,757.42 1668.82,771.61 1661.90,781.52C1639.05,814.28 1608.00,864.78 1608.00,869.18C1608.00,870.37 1613.29,879.17 1619.75,888.73C1626.21,898.29 1633.83,909.79 1636.69,914.30C1639.54,918.81 1644.94,927.11 1648.69,932.74C1652.43,938.37 1658.88,948.11 1663.00,954.37C1667.12,960.63 1672.13,968.17 1674.12,971.13C1676.11,974.08 1681.58,982.35 1686.27,989.50C1690.96,996.65 1698.65,1007.90 1703.37,1014.50C1714.49,1030.07 1724.49,1044.97 1729.50,1053.45C1735.68,1063.91 1751.32,1084.41 1761.76,1095.75C1781.15,1116.81 1802.75,1127.83 1831.94,1131.57C1850.30,1133.92 1854.93,1136.87 1850.62,1143.46C1848.23,1147.10 1847.39,1147.14 1783.50,1146.81C1724.50,1146.50 1724.50,1146.50 1715.00,1143.13C1690.06,1134.29 1674.56,1118.58 1646.29,1073.50C1639.40,1062.50 1631.41,1049.90 1628.54,1045.50C1622.70,1036.53 1607.31,1011.92 1599.47,999.00C1596.63,994.33 1589.63,983.61 1583.91,975.19C1578.18,966.77 1571.79,957.32 1569.69,954.19C1560.06,939.80 1558.64,940.10 1545.54,959.27C1539.79,967.68 1532.78,979.93 1514.50,1013.50C1507.15,1026.99 1497.68,1043.58 1492.52,1052.00C1489.65,1056.67 1484.69,1065.00 1481.49,1070.50C1478.30,1076.00 1474.49,1082.08 1473.03,1084.00C1471.57,1085.92 1469.45,1089.08 1468.33,1091.00C1448.16,1125.47 1425.75,1153.82 1405.53,1170.46C1369.09,1200.42 1328.27,1218.61 1284.07,1224.58C1268.45,1226.69 1221.25,1227.17 1196.50,1225.47ZM1184.61,1095.70C1183.28,1095.26 1181.67,1093.61 1181.02,1092.04C1178.86,1086.83 1182.27,1083.57 1192.50,1081.07C1212.63,1076.15 1221.28,1062.74 1227.72,1026.50C1230.15,1012.85 1230.51,569.13 1228.11,560.50C1222.61,540.79 1211.03,529.89 1190.72,525.30C1180.28,522.94 1176.82,518.91 1180.91,513.86C1182.82,511.50 1182.82,511.50 1274.31,511.50C1363.59,511.50 1365.84,511.55 1367.94,513.45C1370.90,516.13 1370.40,521.01 1367.00,522.62C1365.62,523.27 1359.18,524.51 1352.68,525.36C1331.29,528.17 1319.00,537.28 1312.83,554.89C1310.89,560.41 1310.86,564.28 1310.97,791.88C1311.09,1038.26 1310.88,1027.59 1315.54,1029.38C1322.93,1032.21 1367.59,1024.36 1385.27,1017.12C1415.39,1004.78 1447.66,980.19 1472.18,950.89C1479.74,941.86 1487.00,939.69 1487.00,946.46C1487.00,950.44 1484.78,954.68 1472.44,974.21C1456.97,998.69 1453.89,1003.29 1450.47,1007.00C1448.69,1008.92 1443.92,1014.91 1439.87,1020.30C1427.17,1037.21 1424.70,1040.31 1415.87,1050.57C1404.11,1064.23 1390.04,1078.09 1380.73,1085.19C1364.60,1097.49 1367.48,1097.20 1268.26,1096.81C1223.57,1096.64 1185.93,1096.14 1184.61,1095.70Z"/></svg></div>
             <div class="label">
-              <h3 data-i18n="v3.svc.more">Anything else</h3>
+              <h3 id="svc-v3-svc-more-t" data-i18n="v3.svc.more">Anything else</h3>
               <p data-i18n="v3.svc.more.p">Not on the list? Ask. We'll book it.</p>
-              <a class="pill" href="#brief" data-i18n="svc.ask">Ask us</a>
+              <a class="card-more" href="services/anything-else/" aria-describedby="svc-v3-svc-more-t"><span data-i18n="svc.more">See more</span><span class="arrow-glyph" aria-hidden="true"></span></a>
             </div>
           </article>
           <article class="photo-card ask-card more-card" data-rise style="--d:.8s">
             <div class="ask-art is-icon"><svg class="ask-icon" viewBox="0 0 21 21" aria-hidden="true"><path d="M4 10.5h13M12 5.5l5 5-5 5"/></svg></div>
             <div class="label">
-              <h3 data-i18n="svc.all">All services</h3>
+              <h3 id="svc-svc-all-t" data-i18n="svc.all">All services</h3>
               <p data-i18n="svc.all.p">Every service by category, on one page.</p>
-              <a class="pill" href="services/" data-i18n="svc.more">See more</a>
+              <a class="card-more" href="services/" aria-describedby="svc-svc-all-t"><span data-i18n="svc.more">See more</span><span class="arrow-glyph" aria-hidden="true"></span></a>
             </div>
           </article>
           </div>
@@ -1318,10 +1330,10 @@ main, .site-footer { position: relative; z-index: 1; }
       <div class="photo-bg" aria-hidden="true"><picture><source type="image/avif" srcset="./media/fit/st-week-960.avif 960w, ./media/fit/st-week-1280.avif 1280w, ./media/fit/st-week-1920.avif 1920w" sizes="(max-width: 720px) 250vw, 100vw"><source type="image/webp" srcset="./media/fit/st-week-960.webp 960w, ./media/fit/st-week-1280.webp 1280w, ./media/fit/st-week-1920.webp 1920w" sizes="(max-width: 720px) 250vw, 100vw"><img src="./media/fit/st-week-1920.webp" width="1920" height="1080" alt="" loading="lazy" decoding="async"></picture></div>
       <div class="wrap">
         <div class="week-hero" data-rise>
-          <p class="eyebrow" data-i18n="wk.eye">The week with us</p>
-          <h2 id="week-t" class="week-title"><span data-i18n="wk.l1">Seven days.</span> <span class="wk-gold" data-i18n="wk.l2">One host.</span></h2>
-          <ul class="week-stops"><li data-i18n="wk.s1">Comuna 13</li><li data-i18n="wk.s2">Guatapé</li><li data-i18n="wk.s3">Paragliding</li><li data-i18n="wk.s4">Coffee country</li><li data-i18n="wk.s5">Sunset dinners</li></ul>
-          <a class="see" href="#contact" data-i18n="v2.reach.h">Plan your week</a>
+          <p class="eyebrow" data-i18n="wk.eye">Your stay with us</p>
+          <h2 id="week-t" class="week-title"><span data-i18n="wk.l1">Days or weeks.</span> <span class="wk-gold" data-i18n="wk.l2">We handle it all.</span></h2>
+          <ul class="week-perks"><li data-i18n="wk.k1">Private villas</li><li data-i18n="wk.k2">Tailored itineraries</li><li data-i18n="wk.k3">In-residence services</li><li data-i18n="wk.k4">Private chefs</li><li data-i18n="wk.k5">Private drivers</li><li data-i18n="wk.k6">VIP nights</li><li data-i18n="wk.k7">Bilingual host</li></ul>
+          <a class="see" href="#contact" data-i18n="wk.cta">Plan your stay</a>
         </div>
       </div>
     </section>
@@ -1805,14 +1817,17 @@ main, .site-footer { position: relative; z-index: 1; }
       "v3.svc.more": "Anything else",
       "v3.svc.more.p": "Not on the list? Ask. We'll book it.",
       "v2.week.day": "Day",
-      "wk.eye": "The week with us",
-      "wk.l1": "Seven days.",
-      "wk.l2": "One host.",
-      "wk.s1": "Comuna 13",
-      "wk.s2": "Guatapé",
-      "wk.s3": "Paragliding",
-      "wk.s4": "Coffee country",
-      "wk.s5": "Sunset dinners",
+      "wk.eye": "Your stay with us",
+      "wk.l1": "Days or weeks.",
+      "wk.l2": "We handle it all.",
+      "wk.cta": "Plan your stay",
+      "wk.k1": "Private villas",
+      "wk.k2": "Tailored itineraries",
+      "wk.k3": "In-residence services",
+      "wk.k4": "Private chefs",
+      "wk.k5": "Private drivers",
+      "wk.k6": "VIP nights",
+      "wk.k7": "Bilingual host",
       "v2.how.1p": "Send your dates. We take it from there.",
       "v2.how.2p": "Your bespoke itinerary, the same day.",
       "v2.how.3p": "Your driver waits at arrivals.",
@@ -2091,14 +2106,17 @@ main, .site-footer { position: relative; z-index: 1; }
       "v3.svc.more": "Algo más",
       "v3.svc.more.p": "¿No está en la lista? Pregunta. Lo reservamos.",
       "v2.week.day": "Día",
-      "wk.eye": "La semana con nosotros",
-      "wk.l1": "Siete días.",
-      "wk.l2": "Un anfitrión.",
-      "wk.s1": "Comuna 13",
-      "wk.s2": "Guatapé",
-      "wk.s3": "Parapente",
-      "wk.s4": "Tierra de café",
-      "wk.s5": "Cenas al atardecer",
+      "wk.eye": "Tu estadía con nosotros",
+      "wk.l1": "Días o semanas.",
+      "wk.l2": "Nos encargamos de todo.",
+      "wk.cta": "Planea tu estadía",
+      "wk.k1": "Villas privadas",
+      "wk.k2": "Itinerarios a la medida",
+      "wk.k3": "Servicios en residencia",
+      "wk.k4": "Chefs privados",
+      "wk.k5": "Conductores privados",
+      "wk.k6": "Noches VIP",
+      "wk.k7": "Anfitrión bilingüe",
       "v2.how.1p": "Envía tus fechas. Del resto nos encargamos.",
       "v2.how.2p": "Tu itinerario a la medida, el mismo día.",
       "v2.how.3p": "Tu conductor te espera en llegadas.",

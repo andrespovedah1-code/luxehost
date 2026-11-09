@@ -400,6 +400,18 @@ main, .site-footer { position: relative; z-index: 1; }
 }
 .band .photo-card .label p { margin: 8px 0 0; max-width: 34ch; color: var(--plata); font-size: var(--type-meta); line-height: 1.55; }
 .photo-card .pill { margin-top: auto; }
+/* "See more" on the service cards: a quiet text link, as on the services page; the whole card opens the service */
+.card-more {
+  display: inline-flex; align-items: center; gap: 8px; min-height: 44px; margin-top: auto;
+  color: var(--hueso); font-size: 14px; letter-spacing: 0.04em; text-decoration: none; transition: color var(--dur) var(--ease);
+}
+.card-more::before { content: ""; position: absolute; inset: 0; z-index: 2; }
+.card-more .arrow-glyph { transition: translate var(--dur) var(--ease); }
+.photo-card:hover .card-more, .card-more:focus-visible { color: var(--oro-claro); }
+.photo-card:hover .card-more .arrow-glyph { translate: 3px 0; }
+.card-more:focus-visible { outline: none; }
+.photo-card:has(.card-more:focus-visible) { outline: 1px solid var(--oro-claro); outline-offset: 3px; border-radius: var(--radius); }
+.band .photo-card .label:has(.card-more) p { margin-bottom: 8px; }
 .band .photo-card .label:has(.pill) p { margin-bottom: 21px; }
 .ask-art {
   display: grid; place-items: center;
@@ -561,7 +573,7 @@ main, .site-footer { position: relative; z-index: 1; }
 .guest:nth-child(n+3) { --d: .16s; }
 
 /* =========================================================================
-   The week: one big line over the city at dusk, and where the week goes
+   The week: one big line over the city at dusk, and everything we handle
    ========================================================================= */
 .band--photo { isolation: isolate; overflow: hidden; }
 .band + .band--photo > .wrap, .band--photo + .band > .wrap { border-top: 0; }
@@ -591,13 +603,13 @@ main, .site-footer { position: relative; z-index: 1; }
 }
 .week-title span { display: block; }
 .week-title .wk-gold { color: var(--oro-claro); }
-.week-stops {
+.week-perks {
   display: flex; flex-wrap: wrap; align-items: baseline; margin-top: 34px;
   color: color-mix(in oklch, var(--hueso) 92%, transparent); font-size: clamp(17px, 1.45vw, 22px); line-height: 1.6;
   text-shadow: 0 1px 13px rgba(11, 11, 11, 0.75);
 }
-.week-stops li { white-space: nowrap; }
-.week-stops li + li::before { content: "\00b7"; margin: 0 0.6em; color: var(--oro-claro); }
+.week-perks li { white-space: nowrap; }
+.week-perks li + li::before { content: "\00b7"; margin: 0 0.6em; color: var(--oro-claro); }
 .week-hero .see { margin-top: 34px; }
 
 /* =========================================================================
@@ -887,7 +899,7 @@ main, .site-footer { position: relative; z-index: 1; }
   .band--photo > .wrap { min-height: 0; padding-block: var(--s-55); }
   /* the photo band keeps its height on phones too */
   #week > .wrap { min-height: 560px; }
-  .week-stops { margin-top: 21px; }
+  .week-perks { margin-top: 21px; }
   .week-hero .see { margin-top: 29px; }
   .subscribe { padding: 21px; }
   .sub-fields { grid-template-columns: 1fr; }
@@ -1180,11 +1192,12 @@ html { scroll-padding-top: 131px; }
   <div class="nav-scrim" id="nav-scrim" hidden></div>
   <div class="sidebar" id="site-drawer" hidden>
     <nav id="site-navigation" class="sidebar-nav" aria-label="Navigation" data-i18n-aria="nav.drawer">
-      <a href="../../"><span data-i18n="foot.home">Home</span></a>
-      <a href="../../#destinations"><span data-i18n="nav.dest">Destinations</span></a>
-      <a href="../../services/"><span data-i18n="nav.svc">Services</span></a>
-      <a href="../../#experiences"><span data-i18n="nav.exp">Experiences</span></a>
-      <a href="../../#blog"><span data-i18n="nav.blog">Blog</span></a>
+      <a href="#overview"><span data-i18n="md.n1">Overview</span></a>
+      <a href="#stay"><span data-i18n="md.n2">Where to stay</span></a>
+      <a href="#do"><span data-i18n="md.n3">What to do</span></a>
+      <a href="#days"><span data-i18n="md.n4">Three days</span></a>
+      <a href="#when"><span data-i18n="md.n5">When to go</span></a>
+      <a href="#trips"><span data-i18n="md.n6">Day trips</span></a>
       <a href="#faq"><span data-i18n="md.n7">FAQ</span></a>
       <a href="#contact"><span data-i18n="nav.contact">Contact</span></a>
     </nav>
