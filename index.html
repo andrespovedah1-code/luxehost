@@ -308,6 +308,15 @@ main, .site-footer { position: relative; z-index: 1; }
   transition: color var(--dur) var(--ease);
 }
 .sidebar-foot a:hover { color: var(--oro-claro); }
+/* Below 980px the top bar is hidden, so the side menu also lists the pages; above it, the side menu is sections only */
+.sidebar-pages { display: none; justify-items: start; }
+.sidebar-pages .eyebrow { margin-bottom: 8px; }
+.sidebar-pages a {
+  display: inline-flex; align-items: center; min-height: 44px;
+  color: var(--hueso); font-size: 16px; text-decoration: none; transition: color var(--dur) var(--ease);
+}
+.sidebar-pages a:hover, .sidebar-pages a[aria-current] { color: var(--oro-claro); }
+@media (max-width: 980px) { .sidebar-pages { display: grid; } }
 @keyframes slide-in { from { opacity: 0; translate: -21px 0; } to { opacity: 1; translate: 0 0; } }
 
 /* =========================================================================
@@ -920,6 +929,7 @@ main, .site-footer { position: relative; z-index: 1; }
   .guest figcaption, .stats .stat-label, .xp-card .xp-time, .flow-opt, .field > span, .plan-form legend,
   .plan-form .field > span, .plan-card .plan-note, .subscribe .sub-done { font-size: 14px; }
   .footer-col a, .sidebar-foot a { font-size: 15px; }
+  .sidebar { gap: 21px; padding-top: 21px; padding-bottom: 21px; }
 }
 @media (max-width: 560px) {
   .dest-grid .photo-card > picture { aspect-ratio: 1 / 1; }
@@ -975,6 +985,12 @@ main, .site-footer { position: relative; z-index: 1; }
       <a href="#faq"><span data-i18n="faq.h">FAQ</span></a>
       <a href="#contact"><span data-i18n="nav.contact">Contact</span></a>
     </nav>
+    <div class="sidebar-pages">
+      <p class="eyebrow" data-i18n="nav.pages">Pages</p>
+      <a href="./" aria-current="page"><span data-i18n="foot.home">Home</span></a>
+      <a href="services/"><span data-i18n="nav.svc">Services</span></a>
+      <a href="destinations/medellin/"><span>Medellín</span></a>
+    </div>
     <div class="sidebar-foot">
       <p class="eyebrow" data-i18n="nav.contact">Contact</p>
       <a data-wa="wa.hello" href="https://wa.me/573232098713?text=Hello.%20I%20would%20like%20to%20plan%20a%20stay%20in%20Medell%C3%ADn.">WhatsApp +57 323 209 8713</a>
@@ -1005,8 +1021,8 @@ main, .site-footer { position: relative; z-index: 1; }
         <div class="hero-read" aria-hidden="true"></div>
       </div>
       <div class="hero-copy wrap">
-        <h1 data-i18n-html="hero.h1">Your week in <em>Medellín</em>.</h1>
-        <p class="sub" data-i18n="hero.sub">Private stays in Medellín, airport pickup, and experiences with partners we know and trust.</p>
+        <h1 data-i18n-html="hero.h1">Your private <em>Medellín</em>.</h1>
+        <p class="sub" data-i18n="hero.sub">Private villas, bespoke itineraries and a personal host, from arrival to farewell.</p>
         <div class="hero-actions">
           <a class="see" href="services/" data-i18n="hero.link">See our services</a>
           <a class="see see-ghost" href="#brief" data-exp="consult.item" data-i18n="hero.consult">Book a consultation</a>
@@ -1238,7 +1254,7 @@ main, .site-footer { position: relative; z-index: 1; }
         <ul class="xp-grid">
           <li class="xp-card" data-rise style="--d:0.00s">
             <a class="xp-link" href="#brief" data-exp="v4.xp.1t">
-              <picture><source type="image/avif" srcset="./media/fit/xp-pubcrawl-180.avif 180w, ./media/fit/xp-pubcrawl-360.avif 360w" sizes="(max-width: 720px) 89px, 144px"><source type="image/webp" srcset="./media/fit/xp-pubcrawl-180.webp 180w, ./media/fit/xp-pubcrawl-360.webp 360w" sizes="(max-width: 720px) 89px, 144px"><img src="./media/fit/xp-pubcrawl-360.webp" width="360" height="360" alt="A lit facade at night, people walking past" data-i18n-alt="v4.alt.xp1" loading="lazy" decoding="async"></picture>
+              <picture><source type="image/avif" srcset="./media/fit/xp2-pubcrawl-180.avif 180w, ./media/fit/xp2-pubcrawl-360.avif 360w" sizes="(max-width: 720px) 89px, 144px"><source type="image/webp" srcset="./media/fit/xp2-pubcrawl-180.webp 180w, ./media/fit/xp2-pubcrawl-360.webp 360w" sizes="(max-width: 720px) 89px, 144px"><img src="./media/fit/xp2-pubcrawl-360.webp" width="360" height="360" alt="A packed club under red lights" data-i18n-alt="v4.alt.xp1" loading="lazy" decoding="async"></picture>
               <div class="xp-body">
                 <p class="xp-time" data-i18n="v4.xp.1d">One night</p>
                 <h3 data-i18n="v4.xp.1t">VIP Pub Crawl: Medellín by Night</h3>
@@ -1249,7 +1265,7 @@ main, .site-footer { position: relative; z-index: 1; }
           </li>
           <li class="xp-card" data-rise style="--d:0.08s">
             <a class="xp-link" href="#brief" data-exp="v4.xp.2t">
-              <picture><source type="image/avif" srcset="./media/fit/xp-cielo-180.avif 180w, ./media/fit/xp-cielo-360.avif 360w" sizes="(max-width: 720px) 89px, 144px"><source type="image/webp" srcset="./media/fit/xp-cielo-180.webp 180w, ./media/fit/xp-cielo-360.webp 360w" sizes="(max-width: 720px) 89px, 144px"><img src="./media/fit/xp-cielo-360.webp" width="360" height="360" alt="A paraglider over green mountains" data-i18n-alt="v4.alt.xp2" loading="lazy" decoding="async"></picture>
+              <picture><source type="image/avif" srcset="./media/fit/xp2-cielo-180.avif 180w, ./media/fit/xp2-cielo-360.avif 360w" sizes="(max-width: 720px) 89px, 144px"><source type="image/webp" srcset="./media/fit/xp2-cielo-180.webp 180w, ./media/fit/xp2-cielo-360.webp 360w" sizes="(max-width: 720px) 89px, 144px"><img src="./media/fit/xp2-cielo-360.webp" width="360" height="360" alt="A paraglider over green mountains" data-i18n-alt="v4.alt.xp2" loading="lazy" decoding="async"></picture>
               <div class="xp-body">
                 <p class="xp-time" data-i18n="v4.xp.2d">Full day</p>
                 <h3 data-i18n="v4.xp.2t">Medellín from Above: Paragliding &amp; Local Flavors</h3>
@@ -1260,7 +1276,7 @@ main, .site-footer { position: relative; z-index: 1; }
           </li>
           <li class="xp-card" data-rise style="--d:0.00s">
             <a class="xp-link" href="#brief" data-exp="v4.xp.3t">
-              <picture><source type="image/avif" srcset="./media/fit/xp-grandma-180.avif 180w, ./media/fit/xp-grandma-360.avif 360w" sizes="(max-width: 720px) 89px, 144px"><source type="image/webp" srcset="./media/fit/xp-grandma-180.webp 180w, ./media/fit/xp-grandma-360.webp 360w" sizes="(max-width: 720px) 89px, 144px"><img src="./media/fit/xp-grandma-360.webp" width="360" height="360" alt="Arepas cooking on a griddle" data-i18n-alt="v4.alt.xp3" loading="lazy" decoding="async"></picture>
+              <picture><source type="image/avif" srcset="./media/fit/xp2-grandma-180.avif 180w, ./media/fit/xp2-grandma-360.avif 360w" sizes="(max-width: 720px) 89px, 144px"><source type="image/webp" srcset="./media/fit/xp2-grandma-180.webp 180w, ./media/fit/xp2-grandma-360.webp 360w" sizes="(max-width: 720px) 89px, 144px"><img src="./media/fit/xp2-grandma-360.webp" width="360" height="360" alt="A bandeja paisa with egg, chorizo, plantain and avocado" data-i18n-alt="v4.alt.xp3" loading="lazy" decoding="async"></picture>
               <div class="xp-body">
                 <p class="xp-time" data-i18n="v4.xp.3d">4 hours</p>
                 <h3 data-i18n="v4.xp.3t">Cooking with My Grandma</h3>
@@ -1271,7 +1287,7 @@ main, .site-footer { position: relative; z-index: 1; }
           </li>
           <li class="xp-card" data-rise style="--d:0.08s">
             <a class="xp-link" href="#brief" data-exp="v4.xp.4t">
-              <picture><source type="image/avif" srcset="./media/fit/xp-brunch-180.avif 180w, ./media/fit/xp-brunch-360.avif 360w" sizes="(max-width: 720px) 89px, 144px"><source type="image/webp" srcset="./media/fit/xp-brunch-180.webp 180w, ./media/fit/xp-brunch-360.webp 360w" sizes="(max-width: 720px) 89px, 144px"><img src="./media/fit/xp-brunch-360.webp" width="360" height="360" alt="A rooftop terrace with a pool at dusk" data-i18n-alt="v4.alt.xp4" loading="lazy" decoding="async"></picture>
+              <picture><source type="image/avif" srcset="./media/fit/xp2-brunch-180.avif 180w, ./media/fit/xp2-brunch-360.avif 360w" sizes="(max-width: 720px) 89px, 144px"><source type="image/webp" srcset="./media/fit/xp2-brunch-180.webp 180w, ./media/fit/xp2-brunch-360.webp 360w" sizes="(max-width: 720px) 89px, 144px"><img src="./media/fit/xp2-brunch-360.webp" width="360" height="360" alt="Guests in a rooftop pool above the city" data-i18n-alt="v4.alt.xp4" loading="lazy" decoding="async"></picture>
               <div class="xp-body">
                 <p class="xp-time" data-i18n="v4.xp.4d">Brunch to sunset</p>
                 <h3 data-i18n="v4.xp.4t">Brunch &amp; Pool Vibes</h3>
@@ -1282,7 +1298,7 @@ main, .site-footer { position: relative; z-index: 1; }
           </li>
           <li class="xp-card" data-rise style="--d:0.00s">
             <a class="xp-link" href="#brief" data-exp="v4.xp.5t">
-              <picture><source type="image/avif" srcset="./media/fit/xp-nightscapes-180.avif 180w, ./media/fit/xp-nightscapes-360.avif 360w" sizes="(max-width: 720px) 89px, 144px"><source type="image/webp" srcset="./media/fit/xp-nightscapes-180.webp 180w, ./media/fit/xp-nightscapes-360.webp 360w" sizes="(max-width: 720px) 89px, 144px"><img src="./media/fit/xp-nightscapes-360.webp" width="360" height="360" alt="Medellín's lights under an orange sky" data-i18n-alt="v4.alt.xp5" loading="lazy" decoding="async"></picture>
+              <picture><source type="image/avif" srcset="./media/fit/xp2-nightscapes-180.avif 180w, ./media/fit/xp2-nightscapes-360.avif 360w" sizes="(max-width: 720px) 89px, 144px"><source type="image/webp" srcset="./media/fit/xp2-nightscapes-180.webp 180w, ./media/fit/xp2-nightscapes-360.webp 360w" sizes="(max-width: 720px) 89px, 144px"><img src="./media/fit/xp2-nightscapes-360.webp" width="360" height="360" alt="Medellín's lights coming on at dusk" data-i18n-alt="v4.alt.xp5" loading="lazy" decoding="async"></picture>
               <div class="xp-body">
                 <p class="xp-time" data-i18n="v4.xp.5d">3 hours</p>
                 <h3 data-i18n="v4.xp.5t">Nightscapes Medellín: City Lights</h3>
@@ -1293,7 +1309,7 @@ main, .site-footer { position: relative; z-index: 1; }
           </li>
           <li class="xp-card" data-rise style="--d:0.08s">
             <a class="xp-link" href="#brief" data-exp="v4.xp.6t">
-              <picture><source type="image/avif" srcset="./media/fit/xp-vip-180.avif 180w, ./media/fit/xp-vip-360.avif 360w" sizes="(max-width: 720px) 89px, 144px"><source type="image/webp" srcset="./media/fit/xp-vip-180.webp 180w, ./media/fit/xp-vip-360.webp 360w" sizes="(max-width: 720px) 89px, 144px"><img src="./media/fit/xp-vip-360.webp" width="360" height="360" alt="A villa dining room open to the pool" data-i18n-alt="v4.alt.xp6" loading="lazy" decoding="async"></picture>
+              <picture><source type="image/avif" srcset="./media/fit/xp2-vip-180.avif 180w, ./media/fit/xp2-vip-360.avif 360w" sizes="(max-width: 720px) 89px, 144px"><source type="image/webp" srcset="./media/fit/xp2-vip-180.webp 180w, ./media/fit/xp2-vip-360.webp 360w" sizes="(max-width: 720px) 89px, 144px"><img src="./media/fit/xp2-vip-360.webp" width="360" height="360" alt="A villa terrace with a lit pool at dusk" data-i18n-alt="v4.alt.xp6" loading="lazy" decoding="async"></picture>
               <div class="xp-body">
                 <p class="xp-time" data-i18n="v4.xp.6d">Your dates</p>
                 <h3 data-i18n="v4.xp.6t">Tailor-Made VIP Services</h3>
@@ -1647,6 +1663,7 @@ main, .site-footer { position: relative; z-index: 1; }
       "nav.blog": "Blog",
       "nav.how": "How it works",
       "nav.contact": "Contact",
+      "nav.pages": "Pages",
       "lang.switch": "Language",
       menu: "Menu",
       "menu.open": "Open menu",
@@ -1655,8 +1672,8 @@ main, .site-footer { position: relative; z-index: 1; }
       next: "Next",
       title: "LuxeHost Experience | Private hosting in Medellín",
       meta: "Airport pickup, a house, and a bilingual host on WhatsApp in Medellín.",
-      "hero.h1": "Your week in <em>Medellín</em>.",
-      "hero.sub": "Private stays in Medellín, airport pickup, and experiences with partners we know and trust.",
+      "hero.h1": "Your private <em>Medellín</em>.",
+      "hero.sub": "Private villas, bespoke itineraries and a personal host, from arrival to farewell.",
       "hero.link": "See our services",
       "hero.consult": "Book a consultation",
       "consult.item": "a 30-minute consultation call",
@@ -1914,12 +1931,12 @@ main, .site-footer { position: relative; z-index: 1; }
       "v4.alt.heli": "The Andes from the air, clouds over the valley",
       "v4.alt.water": "An island on Guatapé's lake",
       "v4.alt.adventure": "Mountain bikers above the valley",
-      "v4.alt.xp1": "A lit facade at night, people walking past",
+      "v4.alt.xp1": "A packed club under red lights",
       "v4.alt.xp2": "A paraglider over green mountains",
-      "v4.alt.xp3": "Arepas cooking on a griddle",
-      "v4.alt.xp4": "A rooftop terrace with a pool at dusk",
-      "v4.alt.xp5": "Medellín's lights under an orange sky",
-      "v4.alt.xp6": "A villa dining room open to the pool",
+      "v4.alt.xp3": "A bandeja paisa with egg, chorizo, plantain and avocado",
+      "v4.alt.xp4": "Guests in a rooftop pool above the city",
+      "v4.alt.xp5": "Medellín's lights coming on at dusk",
+      "v4.alt.xp6": "A villa terrace with a lit pool at dusk",
       "v4.alt.dos": "A traveler on the phone in a colorful street",
       "v4.alt.metro": "Metrocable cabins over the hills",
       "v4.alt.day": "A Botero sculpture in front of the Palacio de la Cultura",
@@ -1936,6 +1953,7 @@ main, .site-footer { position: relative; z-index: 1; }
       "nav.blog": "Blog",
       "nav.how": "Cómo funciona",
       "nav.contact": "Contacto",
+      "nav.pages": "Páginas",
       "lang.switch": "Idioma",
       menu: "Menú",
       "menu.open": "Abrir menú",
@@ -1944,8 +1962,8 @@ main, .site-footer { position: relative; z-index: 1; }
       next: "Siguiente",
       title: "LuxeHost Experience | Anfitrión privado en Medellín",
       meta: "Recogida en el aeropuerto, una casa y un anfitrión bilingüe por WhatsApp en Medellín.",
-      "hero.h1": "Tu semana en <em>Medellín</em>.",
-      "hero.sub": "Estadías privadas en Medellín, recogida en el aeropuerto, y experiencias con aliados que conocemos y en quienes confiamos.",
+      "hero.h1": "Tu <em>Medellín</em> privado.",
+      "hero.sub": "Villas privadas, itinerarios a la medida y un anfitrión personal, de la llegada a la despedida.",
       "hero.link": "Ver nuestros servicios",
       "hero.consult": "Agenda una consulta",
       "consult.item": "una llamada de consulta de 30 minutos",
@@ -2203,12 +2221,12 @@ main, .site-footer { position: relative; z-index: 1; }
       "v4.alt.heli": "Los Andes desde el aire, nubes sobre el valle",
       "v4.alt.water": "Una isla en el embalse de Guatapé",
       "v4.alt.adventure": "Ciclistas de montaña sobre el valle",
-      "v4.alt.xp1": "Una fachada iluminada de noche y gente caminando",
+      "v4.alt.xp1": "Un club lleno bajo luces rojas",
       "v4.alt.xp2": "Un parapente sobre montañas verdes",
-      "v4.alt.xp3": "Arepas en la plancha",
-      "v4.alt.xp4": "Una terraza con piscina al atardecer",
-      "v4.alt.xp5": "Las luces de Medellín bajo un cielo naranja",
-      "v4.alt.xp6": "El comedor de una villa abierto a la piscina",
+      "v4.alt.xp3": "Una bandeja paisa con huevo, chorizo, maduro y aguacate",
+      "v4.alt.xp4": "Huéspedes en una piscina en la azotea, sobre la ciudad",
+      "v4.alt.xp5": "Las luces de Medellín encendiéndose al anochecer",
+      "v4.alt.xp6": "La terraza de una villa con la piscina encendida al anochecer",
       "v4.alt.dos": "Una viajera al teléfono en una calle colorida",
       "v4.alt.metro": "Cabinas del Metrocable sobre las montañas",
       "v4.alt.day": "Una escultura de Botero frente al Palacio de la Cultura",

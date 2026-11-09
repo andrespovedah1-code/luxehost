@@ -308,6 +308,15 @@ main, .site-footer { position: relative; z-index: 1; }
   transition: color var(--dur) var(--ease);
 }
 .sidebar-foot a:hover { color: var(--oro-claro); }
+/* Below 980px the top bar is hidden, so the side menu also lists the pages; above it, the side menu is sections only */
+.sidebar-pages { display: none; justify-items: start; }
+.sidebar-pages .eyebrow { margin-bottom: 8px; }
+.sidebar-pages a {
+  display: inline-flex; align-items: center; min-height: 44px;
+  color: var(--hueso); font-size: 16px; text-decoration: none; transition: color var(--dur) var(--ease);
+}
+.sidebar-pages a:hover, .sidebar-pages a[aria-current] { color: var(--oro-claro); }
+@media (max-width: 980px) { .sidebar-pages { display: grid; } }
 @keyframes slide-in { from { opacity: 0; translate: -21px 0; } to { opacity: 1; translate: 0 0; } }
 
 /* =========================================================================
@@ -920,6 +929,7 @@ main, .site-footer { position: relative; z-index: 1; }
   .guest figcaption, .stats .stat-label, .xp-card .xp-time, .flow-opt, .field > span, .plan-form legend,
   .plan-form .field > span, .plan-card .plan-note, .subscribe .sub-done { font-size: 14px; }
   .footer-col a, .sidebar-foot a { font-size: 15px; }
+  .sidebar { gap: 21px; padding-top: 21px; padding-bottom: 21px; }
 }
 @media (max-width: 560px) {
   .dest-grid .photo-card > picture { aspect-ratio: 1 / 1; }
@@ -1201,6 +1211,12 @@ html { scroll-padding-top: 131px; }
       <a href="#faq"><span data-i18n="md.n7">FAQ</span></a>
       <a href="#contact"><span data-i18n="nav.contact">Contact</span></a>
     </nav>
+    <div class="sidebar-pages">
+      <p class="eyebrow" data-i18n="nav.pages">Pages</p>
+      <a href="../../"><span data-i18n="foot.home">Home</span></a>
+      <a href="../../services/"><span data-i18n="nav.svc">Services</span></a>
+      <a href="../../destinations/medellin/" aria-current="page"><span>Medellín</span></a>
+    </div>
     <div class="sidebar-foot">
       <p class="eyebrow" data-i18n="nav.contact">Contact</p>
       <a data-wa="wa.hello" href="https://wa.me/573232098713?text=Hello.%20I%20would%20like%20to%20plan%20a%20stay%20in%20Medell%C3%ADn.">WhatsApp +57 323 209 8713</a>
@@ -1901,6 +1917,7 @@ html { scroll-padding-top: 131px; }
       "nav.drawer": "Navigation",
       "nav.exp": "Experiences",
       "nav.main": "Main",
+      "nav.pages": "Pages",
       "nav.svc": "Services",
       "plan.adventure": "Adventure",
       "plan.business": "Business trip",
@@ -2135,6 +2152,7 @@ html { scroll-padding-top: 131px; }
       "nav.drawer": "Navegación",
       "nav.exp": "Experiencias",
       "nav.main": "Navegación principal",
+      "nav.pages": "Páginas",
       "nav.svc": "Servicios",
       "plan.adventure": "Aventura",
       "plan.business": "Viaje de negocios",
