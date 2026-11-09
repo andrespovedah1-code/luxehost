@@ -10,6 +10,7 @@
   <meta property="og:type" content="website">
   <meta property="og:image" content="https://andrespovedah1-code.github.io/luxehost/media/hero/hero-poblado-1920.webp">
   <meta property="og:url" content="https://andrespovedah1-code.github.io/luxehost/">
+  <link rel="canonical" href="https://andrespovedah1-code.github.io/luxehost/">
   <meta property="og:locale" content="en">
   <meta name="theme-color" content="#0B0B0B">
   <link rel="icon" href="./media/icon/luxehost-icon.svg" type="image/svg+xml" sizes="any">
@@ -466,6 +467,11 @@ main, .site-footer { position: relative; z-index: 1; }
 }
 .rail.is-scrolled { --fade-l: 55px; }
 .rail.at-end { --fade-r: 0px; }
+/* iPhone Safari can paint a mask on a scrolling rail over the cards' text. On touch screens and phones
+   the peek of the next card is the hint, so the rails have no fade there. */
+@media (hover: none), (max-width: 720px) {
+  .rail { -webkit-mask-image: none; mask-image: none; }
+}
 .rail:focus-visible { outline-offset: -2px; }
 .rail > * { scroll-snap-align: start; flex: 0 0 auto; }
 .rail .photo-card { width: min(78%, var(--card)); }
@@ -555,7 +561,7 @@ main, .site-footer { position: relative; z-index: 1; }
 .guest:nth-child(n+3) { --d: .16s; }
 
 /* =========================================================================
-   The week: seven days on one line over the city at dusk, read at a glance
+   The week: one big line over the city at dusk, and where the week goes
    ========================================================================= */
 .band--photo { isolation: isolate; overflow: hidden; }
 .band + .band--photo > .wrap, .band--photo + .band > .wrap { border-top: 0; }
@@ -577,17 +583,22 @@ main, .site-footer { position: relative; z-index: 1; }
     linear-gradient(to bottom, rgba(11, 11, 11, 0.4), rgba(11, 11, 11, 0.12) 40%, rgba(11, 11, 11, 0.72) 100%);
 }
 .band--photo .lede { text-shadow: 0 1px 13px rgba(11, 11, 11, 0.6); }
-.week-line { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); }
-.week-line li {
-  position: relative; display: grid; gap: 8px; align-content: start; padding: 21px 13px 0 0;
-  border-top: 1px solid color-mix(in oklch, var(--hueso) 30%, transparent);
+#week > .wrap { justify-content: center; }
+.week-hero { max-width: 820px; }
+.week-title {
+  font-size: clamp(3rem, 7vw, 6.4rem); line-height: 0.94; letter-spacing: -0.035em;
+  text-shadow: 0 2px 34px rgba(11, 11, 11, 0.45); text-wrap: initial;
 }
-.week-line li::before { content: ""; position: absolute; left: 0; top: -4px; width: 7px; height: 7px; border-radius: 50%; background: var(--oro-claro); }
-.week-line .wk-n { color: var(--oro-claro); font-family: var(--f-title); font-weight: 300; font-size: 15px; line-height: 1; letter-spacing: 0.12em; }
-.week-line .wk-t {
-  color: var(--hueso); font-family: var(--f-title); font-weight: 300; font-size: clamp(19px, 1.6vw, 24px); line-height: 1.2;
-  text-shadow: 0 1px 13px rgba(11, 11, 11, 0.6);
+.week-title span { display: block; }
+.week-title .wk-gold { color: var(--oro-claro); }
+.week-stops {
+  display: flex; flex-wrap: wrap; align-items: baseline; margin-top: 34px;
+  color: color-mix(in oklch, var(--hueso) 92%, transparent); font-size: clamp(17px, 1.45vw, 22px); line-height: 1.6;
+  text-shadow: 0 1px 13px rgba(11, 11, 11, 0.75);
 }
+.week-stops li { white-space: nowrap; }
+.week-stops li + li::before { content: "\00b7"; margin: 0 0.6em; color: var(--oro-claro); }
+.week-hero .see { margin-top: 34px; }
 
 /* =========================================================================
    How it works: five steps on one line; the call is optional
@@ -851,7 +862,6 @@ main, .site-footer { position: relative; z-index: 1; }
     top: 66px; left: 27px; width: 1px; height: calc(100% - 77px);
     background: linear-gradient(to bottom, color-mix(in oklch, var(--oro) 65%, transparent), color-mix(in oklch, var(--oro) 20%, transparent));
   }
-  .week-line { grid-template-columns: repeat(4, minmax(0, 1fr)); row-gap: 34px; }
   .flow-step .flow-link { grid-column: 2; justify-self: start; }
   .sec-top { flex-direction: column; align-items: flex-start; }
   .subscribe { grid-template-columns: 1fr; }
@@ -875,11 +885,10 @@ main, .site-footer { position: relative; z-index: 1; }
   .stats-grid { grid-template-columns: 1fr 1fr; row-gap: 34px; }
   .stats-grid article:nth-child(3)::before { display: none; }
   .band--photo > .wrap { min-height: 0; padding-block: var(--s-55); }
-  /* two short columns on phones, so the band keeps its size */
-  .week-line { grid-template-columns: repeat(2, minmax(0, 1fr)); grid-template-rows: repeat(4, auto); grid-auto-flow: column; column-gap: 21px; row-gap: 0; }
-  .week-line li { grid-template-columns: 30px minmax(0, 1fr); align-items: baseline; gap: 0; padding: 13px 0; border-top-color: color-mix(in oklch, var(--hueso) 18%, transparent); }
-  .week-line li::before { display: none; }
-  .week-line .wk-t { font-size: 18px; }
+  /* the photo band keeps its height on phones too */
+  #week > .wrap { min-height: 560px; }
+  .week-stops { margin-top: 21px; }
+  .week-hero .see { margin-top: 29px; }
   .subscribe { padding: 21px; }
   .sub-fields { grid-template-columns: 1fr; }
   .plan-card { padding: 21px; }
@@ -892,6 +901,13 @@ main, .site-footer { position: relative; z-index: 1; }
   .footer-base { flex-direction: column; align-items: flex-start; }
   .footer-base .language-switch { margin: 0 0 0 -13px; }
   .site-footer { padding-bottom: 89px; }
+  /* Phones read one step larger, everywhere */
+  :root { --type-body: 16.5px; --type-small: 15.5px; --type-meta: 14px; --type-foot: 19px; --type-card: 22px; }
+  .band .photo-card .label p, .band .xp-card .xp-text { font-size: 15px; }
+  .pill, .dest-go, .chip, .language-switch, .language-switch span { font-size: 14px; }
+  .guest figcaption, .stats .stat-label, .xp-card .xp-time, .flow-opt, .field > span, .plan-form legend,
+  .plan-form .field > span, .plan-card .plan-note, .subscribe .sub-done { font-size: 14px; }
+  .footer-col a, .sidebar-foot a { font-size: 15px; }
 }
 @media (max-width: 560px) {
   .dest-grid .photo-card > picture { aspect-ratio: 1 / 1; }
@@ -1000,7 +1016,7 @@ main, .site-footer { position: relative; z-index: 1; }
             <div class="label">
               <h3 id="dest-med-t">Medellín</h3>
               <p data-i18n="v2.dest.med">Far beyond El Poblado: Provenza, Envigado, Comuna 13 and Santa Elena's flowers.</p>
-              <a class="dest-go" href="luxehost-medellin.html" aria-describedby="dest-med-t"><span data-i18n="dest.explore">Explore</span><span class="arrow-glyph" aria-hidden="true"></span></a>
+              <a class="dest-go" href="destinations/medellin/" aria-describedby="dest-med-t"><span data-i18n="dest.explore">Explore</span><span class="arrow-glyph" aria-hidden="true"></span></a>
             </div>
           </article>
           <article class="photo-card" data-rise style="--d:.08s">
@@ -1008,7 +1024,7 @@ main, .site-footer { position: relative; z-index: 1; }
             <div class="label">
               <h3 id="dest-gua-t">Guatapé</h3>
               <p data-i18n="v2.dest.gua">Two hours east. El Peñol, the lake by boat, painted streets.</p>
-              <a class="dest-go" href="luxehost-guatape.html" aria-describedby="dest-gua-t"><span data-i18n="dest.explore">Explore</span><span class="arrow-glyph" aria-hidden="true"></span></a>
+              <a class="dest-go" href="destinations/guatape/" aria-describedby="dest-gua-t"><span data-i18n="dest.explore">Explore</span><span class="arrow-glyph" aria-hidden="true"></span></a>
             </div>
           </article>
           <article class="photo-card" data-rise style="--d:.16s">
@@ -1016,7 +1032,7 @@ main, .site-footer { position: relative; z-index: 1; }
             <div class="label">
               <h3 id="dest-ant-t" data-i18n="dest.ant.h">Greater Antioquia</h3>
               <p data-i18n="v2.dest.ant">Jardín, Jericó, Santa Fe de Antioquia. Pueblos in the coffee mountains.</p>
-              <a class="dest-go" href="luxehost-antioquia.html" aria-describedby="dest-ant-t"><span data-i18n="dest.explore">Explore</span><span class="arrow-glyph" aria-hidden="true"></span></a>
+              <a class="dest-go" href="destinations/antioquia/" aria-describedby="dest-ant-t"><span data-i18n="dest.explore">Explore</span><span class="arrow-glyph" aria-hidden="true"></span></a>
             </div>
           </article>
         </div>
@@ -1063,7 +1079,7 @@ main, .site-footer { position: relative; z-index: 1; }
             <div class="label">
               <h3 data-i18n="v3.svc.villa">Private villas</h3>
               <p data-i18n="v3.svc.villa.p">Handpicked homes. Pools, views, total privacy.</p>
-              <a class="pill" href="properties.html" data-i18n="v3.svc.villa.btn">See villas</a>
+              <a class="pill" href="services/#stay" data-i18n="v3.svc.villa.btn">See villas</a>
             </div>
           </article>
           <article class="photo-card" data-rise style="--d:.05s">
@@ -1103,7 +1119,7 @@ main, .site-footer { position: relative; z-index: 1; }
             <div class="label">
               <h3 data-i18n="v3.svc.driver">Private transportation</h3>
               <p data-i18n="v3.svc.driver.p">Airport pickup and a driver, day or night.</p>
-              <a class="pill" href="transport.html" data-i18n="svc.trans.btn">See transport</a>
+              <a class="pill" href="services/#move" data-i18n="svc.trans.btn">See transport</a>
             </div>
           </article>
           <article class="photo-card" data-rise style="--d:.3s">
@@ -1191,7 +1207,7 @@ main, .site-footer { position: relative; z-index: 1; }
             <div class="label">
               <h3 data-i18n="svc.all">All services</h3>
               <p data-i18n="svc.all.p">Every service by category, on one page.</p>
-              <a class="pill" href="luxehost-services.html" data-i18n="svc.more">See more</a>
+              <a class="pill" href="services/" data-i18n="svc.more">See more</a>
             </div>
           </article>
           </div>
@@ -1301,23 +1317,12 @@ main, .site-footer { position: relative; z-index: 1; }
     <section class="band band--photo" id="week" aria-labelledby="week-t">
       <div class="photo-bg" aria-hidden="true"><picture><source type="image/avif" srcset="./media/fit/st-week-960.avif 960w, ./media/fit/st-week-1280.avif 1280w, ./media/fit/st-week-1920.avif 1920w" sizes="(max-width: 720px) 250vw, 100vw"><source type="image/webp" srcset="./media/fit/st-week-960.webp 960w, ./media/fit/st-week-1280.webp 1280w, ./media/fit/st-week-1920.webp 1920w" sizes="(max-width: 720px) 250vw, 100vw"><img src="./media/fit/st-week-1920.webp" width="1920" height="1080" alt="" loading="lazy" decoding="async"></picture></div>
       <div class="wrap">
-        <div class="sec-top">
-          <div class="sec-head" data-rise>
-            <p class="eyebrow" data-i18n="exp.eye">The week</p>
-            <h2 id="week-t" data-i18n="exp.h2">The week with us.</h2>
-            <p class="lede" data-i18n="v2.week.line">One sample week. Yours is made to measure.</p>
-          </div>
-          <a class="send" href="#contact" data-i18n="v2.reach.h">Plan your week</a>
+        <div class="week-hero" data-rise>
+          <p class="eyebrow" data-i18n="wk.eye">The week with us</p>
+          <h2 id="week-t" class="week-title"><span data-i18n="wk.l1">Seven days.</span> <span class="wk-gold" data-i18n="wk.l2">One host.</span></h2>
+          <ul class="week-stops"><li data-i18n="wk.s1">Comuna 13</li><li data-i18n="wk.s2">Guatapé</li><li data-i18n="wk.s3">Paragliding</li><li data-i18n="wk.s4">Coffee country</li><li data-i18n="wk.s5">Sunset dinners</li></ul>
+          <a class="see" href="#contact" data-i18n="v2.reach.h">Plan your week</a>
         </div>
-        <ol class="week-line" data-rise>
-          <li><span class="wk-n"><span class="sr-only" data-i18n="v2.week.day">Day</span> 01</span><span class="wk-t" data-i18n="v2.week.1t">Arrival</span></li>
-          <li><span class="wk-n"><span class="sr-only" data-i18n="v2.week.day">Day</span> 02</span><span class="wk-t" data-i18n="v2.week.2t">The city</span></li>
-          <li><span class="wk-n"><span class="sr-only" data-i18n="v2.week.day">Day</span> 03</span><span class="wk-t" data-i18n="v2.week.3t">Guatapé</span></li>
-          <li><span class="wk-n"><span class="sr-only" data-i18n="v2.week.day">Day</span> 04</span><span class="wk-t" data-i18n="v2.week.4t">Paragliding</span></li>
-          <li><span class="wk-n"><span class="sr-only" data-i18n="v2.week.day">Day</span> 05</span><span class="wk-t" data-i18n="v2.week.5t">Coffee country</span></li>
-          <li><span class="wk-n"><span class="sr-only" data-i18n="v2.week.day">Day</span> 06</span><span class="wk-t" data-i18n="v2.week.6t">Sunset dinner</span></li>
-          <li><span class="wk-n"><span class="sr-only" data-i18n="v2.week.day">Day</span> 07</span><span class="wk-t" data-i18n="v2.week.7t">Home</span></li>
-        </ol>
       </div>
     </section>
 
@@ -1586,9 +1591,9 @@ main, .site-footer { position: relative; z-index: 1; }
           <h3 data-i18n="foot.map">Sitemap</h3>
           <ul>
             <li><a href="#top" data-i18n="foot.home">Home</a></li>
-            <li><a href="properties.html" data-i18n="foot.properties">Properties</a></li>
-            <li><a href="services.html" data-i18n="foot.services">Services</a></li>
-            <li><a href="concierge.html" data-i18n="foot.concierge">Concierge</a></li>
+            <li><a href="services/#stay" data-i18n="foot.properties">Properties</a></li>
+            <li><a href="services/" data-i18n="foot.services">Services</a></li>
+            <li><a href="services/#extras" data-i18n="foot.concierge">Concierge</a></li>
             <li><a href="blog.html" data-i18n="foot.blog">Blog</a></li>
             <li><a href="#contact" data-i18n="foot.contact">Contact</a></li>
           </ul>
@@ -1799,15 +1804,15 @@ main, .site-footer { position: relative; z-index: 1; }
       "v3.svc.shop.p": "Local designers and the best boutiques, with an expert eye.",
       "v3.svc.more": "Anything else",
       "v3.svc.more.p": "Not on the list? Ask. We'll book it.",
-      "v2.week.line": "One sample week. Yours is made to measure.",
       "v2.week.day": "Day",
-      "v2.week.1t": "Arrival",
-      "v2.week.2t": "The city",
-      "v2.week.3t": "Guatapé",
-      "v2.week.4t": "Paragliding",
-      "v2.week.5t": "Coffee country",
-      "v2.week.6t": "Sunset dinner",
-      "v2.week.7t": "Home",
+      "wk.eye": "The week with us",
+      "wk.l1": "Seven days.",
+      "wk.l2": "One host.",
+      "wk.s1": "Comuna 13",
+      "wk.s2": "Guatapé",
+      "wk.s3": "Paragliding",
+      "wk.s4": "Coffee country",
+      "wk.s5": "Sunset dinners",
       "v2.how.1p": "Send your dates. We take it from there.",
       "v2.how.2p": "Your bespoke itinerary, the same day.",
       "v2.how.3p": "Your driver waits at arrivals.",
@@ -2085,15 +2090,15 @@ main, .site-footer { position: relative; z-index: 1; }
       "v3.svc.shop.p": "Diseñadores locales y las mejores boutiques, con ojo experto.",
       "v3.svc.more": "Algo más",
       "v3.svc.more.p": "¿No está en la lista? Pregunta. Lo reservamos.",
-      "v2.week.line": "Una semana de ejemplo. La tuya, a la medida.",
       "v2.week.day": "Día",
-      "v2.week.1t": "Llegada",
-      "v2.week.2t": "La ciudad",
-      "v2.week.3t": "Guatapé",
-      "v2.week.4t": "Parapente",
-      "v2.week.5t": "Tierra de café",
-      "v2.week.6t": "Cena al atardecer",
-      "v2.week.7t": "Regreso",
+      "wk.eye": "La semana con nosotros",
+      "wk.l1": "Siete días.",
+      "wk.l2": "Un anfitrión.",
+      "wk.s1": "Comuna 13",
+      "wk.s2": "Guatapé",
+      "wk.s3": "Parapente",
+      "wk.s4": "Tierra de café",
+      "wk.s5": "Cenas al atardecer",
       "v2.how.1p": "Envía tus fechas. Del resto nos encargamos.",
       "v2.how.2p": "Tu itinerario a la medida, el mismo día.",
       "v2.how.3p": "Tu conductor te espera en llegadas.",
