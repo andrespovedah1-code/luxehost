@@ -1040,34 +1040,62 @@ html { scroll-padding-top: calc(var(--bar) + 76px); }
 .md-photo img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
 .md-photo figcaption { margin-top: 13px; color: var(--plata); font-size: 13px; letter-spacing: 0.04em; }
 
-/* Where to stay: a valley map that follows the list */
-.md-areas { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.618fr); gap: 34px 89px; align-items: center; }
+/* Where to stay: a real street map of the valley (OpenStreetMap), drawn in the site's colours, that follows the list.
+   The picture carries the streets and the river; the pins and names sit on it as text, so they stay sharp and
+   readable at any size. */
+.md-areas { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 34px 55px; align-items: center; }
 .md-map {
-  margin: 0; padding: 21px 21px 13px; border-radius: var(--radius);
+  margin: 0; padding: 13px 13px 8px; border-radius: var(--radius);
   border: 1px solid color-mix(in oklch, var(--oro) 26%, transparent);
   background:
-    radial-gradient(ellipse 70% 55% at 55% 55%, color-mix(in oklch, var(--oro) 9%, transparent), transparent 72%),
+    radial-gradient(ellipse 62% 52% at 48% 52%, color-mix(in oklch, var(--oro) 11%, transparent), transparent 72%),
     linear-gradient(160deg, #171717, var(--obsidiana));
 }
-.md-map svg { display: block; width: 100%; height: auto; overflow: visible; }
+.md-map-art { position: relative; container-type: inline-size; }
+.md-map-marks { position: absolute; inset: 0; }
+.md-map-art img { display: block; width: 100%; height: auto; border-radius: calc(var(--radius) - 5px); }
 .md-map figcaption { margin-top: 8px; text-align: center; color: var(--plata); font-size: 12px; letter-spacing: 0.04em; }
-.md-valley { fill: color-mix(in oklch, var(--oro) 6%, transparent); }
-.md-ridge { fill: none; stroke: color-mix(in oklch, var(--plata) 34%, transparent); stroke-width: 1; }
-.md-river { fill: none; stroke: color-mix(in oklch, var(--oro-claro) 70%, transparent); stroke-width: 1.5; stroke-linecap: round; }
-.md-road { fill: none; stroke: color-mix(in oklch, var(--hueso) 38%, transparent); stroke-width: 1; stroke-dasharray: 3 4; }
-.md-map text { font-family: var(--f-body); font-weight: 300; font-size: 12px; letter-spacing: 0.02em; fill: var(--hueso); }
-.md-map .md-small { font-size: 11px; fill: color-mix(in oklch, var(--plata) 85%, transparent); }
-.md-river-label { font-size: 10px; letter-spacing: 0.16em; fill: color-mix(in oklch, var(--oro-claro) 70%, transparent) !important; }
-.md-ref circle { fill: color-mix(in oklch, var(--plata) 55%, transparent); }
-.md-north path { fill: none; stroke: color-mix(in oklch, var(--plata) 60%, transparent); stroke-width: 1; }
-.md-pin { cursor: pointer; }
-.md-pin .md-halo { fill: var(--oro); opacity: 0; transition: opacity var(--dur) var(--ease); }
-.md-pin .md-dot { fill: var(--obsidiana); stroke: var(--oro-claro); stroke-width: 1.5; transition: fill var(--dur) var(--ease); }
-.md-pin text { transition: fill var(--dur) var(--ease); }
-.md-pin.is-hover .md-halo { opacity: 0.12; }
-.md-pin.is-on .md-halo { opacity: 0.24; }
-.md-pin.is-on .md-dot { fill: var(--oro-claro); }
-.md-pin.is-on text { fill: var(--oro-claro); }
+.md-map figcaption a { color: inherit; text-underline-offset: 3px; }
+.md-map figcaption a:hover { color: var(--oro-claro); }
+.md-mark { position: absolute; width: 0; height: 0; }
+.md-mark-label {
+  position: absolute; top: -9px; color: var(--hueso); font-size: 13px; line-height: 18px; letter-spacing: 0.02em; white-space: nowrap;
+  text-shadow: 0 0 2px rgba(11, 11, 11, 0.95), 0 1px 8px rgba(11, 11, 11, 0.9);
+  transition: color var(--dur) var(--ease);
+}
+.md-mark[data-side="r"] .md-mark-label { left: 13px; }
+.md-mark[data-side="l"] .md-mark-label { right: 13px; }
+.md-mark[data-side="t"] .md-mark-label { left: 0; top: -31px; translate: -50% 0; }
+.md-pin { z-index: 2; cursor: pointer; }
+.md-pin .md-halo, .md-pin .md-dot { position: absolute; border-radius: 50%; }
+.md-pin .md-halo { left: -17px; top: -17px; width: 34px; height: 34px; background: var(--oro); opacity: 0; transition: opacity var(--dur) var(--ease); }
+.md-pin .md-dot {
+  left: -6px; top: -6px; width: 12px; height: 12px; background: var(--obsidiana);
+  box-shadow: inset 0 0 0 1.5px var(--oro-claro), 0 0 0 3px rgba(11, 11, 11, 0.55);
+  transition: background-color var(--dur) var(--ease);
+}
+.md-pin.is-hover .md-halo { opacity: 0.16; }
+.md-pin.is-on .md-halo { opacity: 0.3; }
+.md-pin.is-on .md-dot { background: var(--oro-claro); }
+.md-pin.is-on .md-mark-label { color: var(--oro-claro); }
+.md-ref .md-ref-dot { position: absolute; left: -3px; top: -3px; width: 6px; height: 6px; border-radius: 50%; background: color-mix(in oklch, var(--plata) 70%, transparent); }
+.md-ref .md-mark-label { font-size: 12px; color: color-mix(in oklch, var(--plata) 92%, transparent); }
+.md-river-label {
+  position: absolute; translate: -50% -50%; color: color-mix(in oklch, var(--oro-claro) 80%, transparent);
+  font-size: 10px; letter-spacing: 0.18em; white-space: nowrap; text-shadow: 0 0 6px rgba(11, 11, 11, 0.9);
+}
+.md-mde { position: absolute; right: 8px; color: color-mix(in oklch, var(--plata) 92%, transparent); font-size: 12px; white-space: nowrap; text-shadow: 0 0 6px rgba(11, 11, 11, 0.9); }
+.md-mde::after { content: " \2192"; color: var(--oro-claro); }
+.md-north { position: absolute; top: 10px; right: 12px; display: grid; justify-items: center; gap: 2px; color: color-mix(in oklch, var(--plata) 80%, transparent); font-size: 11px; }
+.md-north::before { content: ""; width: 1px; height: 17px; background: linear-gradient(to bottom, var(--oro-claro), transparent); }
+/* small maps (phones, the two-column tablet layout): fewer, tidier labels */
+@container (max-width: 480px) {
+  .md-river-label { display: none; }
+  .md-mark[data-side="t"] .md-mark-label { left: auto; right: -6px; translate: none; }
+}
+@container (max-width: 300px) {
+  .md-pin[data-area="palmas"] .md-mark-label { left: -26px; top: 9px; }
+}
 .md-area-list { border-top: 1px solid var(--line-soft); }
 .md-area { border-bottom: 1px solid var(--line-soft); }
 .md-area-btn {
@@ -1161,7 +1189,7 @@ html { scroll-padding-top: calc(var(--bar) + 76px); }
   .md-hero .hero-copy { padding-bottom: 200px; }
   .md-facts { bottom: 89px; }
   .md-overview, .md-areas, .md-trips { grid-template-columns: 1fr; }
-  .md-map { max-width: 460px; }
+  .md-map { width: 100%; max-width: 620px; justify-self: center; }
   .md-do-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .md-days { grid-template-columns: 1fr; }
   .md-days > li { padding: 21px; }
@@ -1171,6 +1199,8 @@ html { scroll-padding-top: calc(var(--bar) + 76px); }
   .md-trip-cards { grid-template-columns: 1fr; }
 }
 @media (max-width: 720px) {
+  .md-mark-label { font-size: 12px; }
+  .md-ref .md-mark-label, .md-mde { font-size: 11px; }
   .md-hero .hero-copy { padding-bottom: 262px; }
   .md-facts { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .md-facts li { padding: 13px 8px; }
@@ -1324,21 +1354,12 @@ html { scroll-padding-top: calc(var(--bar) + 76px); }
           <p class="lede" data-i18n="md.s.p">Each area has its own pace. Tell us yours and we match the villa.</p>
         </div>
         <div class="md-areas">
-          <figure class="md-map" data-rise aria-hidden="true">
-            <svg viewBox="0 0 420 540" focusable="false">
-              <path class="md-valley" d="M96,530 C118,430 70,330 88,220 C100,140 74,70 82,10 L298,10 C292,90 312,170 300,250 C290,340 302,440 284,530 Z"/>
-              <path class="md-ridge" d="M96,530 C118,430 70,330 88,220 C100,140 74,70 82,10"/>
-              <path class="md-ridge" d="M298,10 C292,90 312,170 300,250 C290,340 302,440 284,530"/>
-              <path class="md-river" d="M188,535 C202,465 168,402 184,332 C199,262 172,204 186,136 C196,82 180,44 186,5"/>
-              <text class="md-river-label" transform="translate(168 520) rotate(-82)">RÍO MEDELLÍN</text>
-              <path class="md-road" d="M334,298 C356,290 378,276 412,258"/>
-              <text class="md-small" x="414" y="246" text-anchor="end" data-i18n="md.s.mde">To MDE, 45 min</text>
-              <g class="md-ref"><circle cx="212" cy="150" r="3.5"/><text class="md-small" x="222" y="154">Centro</text></g>
-              <g class="md-ref"><circle cx="118" cy="182" r="3.5"/><text class="md-small" x="108" y="186" text-anchor="end">Comuna 13</text></g>
-              <g class="md-pin is-on" data-area="poblado"><circle class="md-halo" cx="242" cy="330" r="17"/><circle class="md-dot" cx="242" cy="330" r="6"/><text x="256" y="334" text-anchor="start">El Poblado</text></g><g class="md-pin" data-area="palmas"><circle class="md-halo" cx="328" cy="302" r="17"/><circle class="md-dot" cx="328" cy="302" r="6"/><text x="342" y="306" text-anchor="start">Las Palmas</text></g><g class="md-pin" data-area="laureles"><circle class="md-halo" cx="140" cy="258" r="17"/><circle class="md-dot" cx="140" cy="258" r="6"/><text x="126" y="262" text-anchor="end">Laureles</text></g><g class="md-pin" data-area="envigado"><circle class="md-halo" cx="228" cy="432" r="17"/><circle class="md-dot" cx="228" cy="432" r="6"/><text x="242" y="436" text-anchor="start">Envigado</text></g><g class="md-pin" data-area="elena"><circle class="md-halo" cx="346" cy="176" r="17"/><circle class="md-dot" cx="346" cy="176" r="6"/><text x="346" y="160" text-anchor="middle">Santa Elena</text></g>
-              <g class="md-north"><path d="M398,48 L398,24 M392,32 L398,24 L404,32"/><text class="md-small" x="398" y="64" text-anchor="middle">N</text></g>
-            </svg>
-            <figcaption data-i18n="md.s.map">The Aburrá Valley, not to scale</figcaption>
+          <figure class="md-map" data-rise>
+            <div class="md-map-art">
+              <picture><source type="image/avif" srcset="../../media/fit/md-map-560.avif 560w, ../../media/fit/md-map-1120.avif 1120w" sizes="(max-width: 720px) calc(100vw - 70px), (max-width: 980px) 594px, 540px"><source type="image/webp" srcset="../../media/fit/md-map-560.webp 560w, ../../media/fit/md-map-1120.webp 1120w" sizes="(max-width: 720px) calc(100vw - 70px), (max-width: 980px) 594px, 540px"><img src="../../media/fit/md-map-1120.webp" width="1120" height="1104" alt="A street map of Medellín and the Aburrá Valley" data-i18n-alt="md.s.alt" loading="lazy" decoding="async"></picture>
+              <div class="md-map-marks" aria-hidden="true"><span class="md-mark md-ref" data-side="r" style="left:48.22%;top:26.31%"><span class="md-ref-dot"></span><span class="md-mark-label">Centro</span></span><span class="md-mark md-ref" data-side="r" style="left:12.14%;top:22.48%"><span class="md-ref-dot"></span><span class="md-mark-label">Comuna 13</span></span><span class="md-river-label" style="left:35.09%;top:70.91%;rotate:-49.9deg">RÍO MEDELLÍN</span><span class="md-mde" style="top:74%" data-i18n="md.s.mde">To MDE, 45 min</span><span class="md-north">N</span><span class="md-mark md-pin is-on" data-area="poblado" data-side="l" style="left:47.96%;top:54.2%"><span class="md-halo"></span><span class="md-dot"></span><span class="md-mark-label">El Poblado</span></span><span class="md-mark md-pin" data-area="palmas" data-side="r" style="left:62.1%;top:55.12%"><span class="md-halo"></span><span class="md-dot"></span><span class="md-mark-label">Las Palmas</span></span><span class="md-mark md-pin" data-area="laureles" data-side="l" style="left:29.06%;top:32.0%"><span class="md-halo"></span><span class="md-dot"></span><span class="md-mark-label">Laureles</span></span><span class="md-mark md-pin" data-area="envigado" data-side="l" style="left:34.6%;top:79.91%"><span class="md-halo"></span><span class="md-dot"></span><span class="md-mark-label">Envigado</span></span><span class="md-mark md-pin" data-area="elena" data-side="t" style="left:93.39%;top:52.99%"><span class="md-halo"></span><span class="md-dot"></span><span class="md-mark-label">Santa Elena</span></span></div>
+            </div>
+            <figcaption data-i18n-html="md.s.map">The Aburrá Valley · Map data © <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap</a> contributors</figcaption>
           </figure>
           <ul class="md-area-list" data-rise style="--d:.08s">
             <li class="md-area is-open" data-area="poblado">
@@ -1888,9 +1909,10 @@ html { scroll-padding-top: calc(var(--bar) + 76px); }
       "md.q6.a": "Yes. For Feria de las Flores or the Christmas lights, write early: villas book up.",
       "md.q6.q": "Can you plan around a festival?",
       "md.reach.h": "Plan your Medellín week",
+      "md.s.alt": "A street map of Medellín and the Aburrá Valley",
       "md.s.eye": "Where to stay",
       "md.s.h": "Pick your corner of the city.",
-      "md.s.map": "The Aburrá Valley, not to scale",
+      "md.s.map": "The Aburrá Valley · Map data © <a href=\"https://www.openstreetmap.org/copyright\" target=\"_blank\" rel=\"noopener\">OpenStreetMap</a> contributors",
       "md.s.mde": "To MDE, 45 min",
       "md.s.p": "Each area has its own pace. Tell us yours and we match the villa.",
       "md.sub": "The city of eternal spring, at your pace.",
@@ -2123,9 +2145,10 @@ html { scroll-padding-top: calc(var(--bar) + 76px); }
       "md.q6.a": "Sí. Para la Feria de las Flores o los alumbrados, escribe con tiempo: las villas se llenan.",
       "md.q6.q": "¿Pueden planear alrededor de un festival?",
       "md.reach.h": "Planea tu semana en Medellín",
+      "md.s.alt": "Un mapa de las calles de Medellín y el Valle de Aburrá",
       "md.s.eye": "Dónde quedarte",
       "md.s.h": "Elige tu rincón de la ciudad.",
-      "md.s.map": "El Valle de Aburrá, sin escala",
+      "md.s.map": "El Valle de Aburrá · Datos del mapa © colaboradores de <a href=\"https://www.openstreetmap.org/copyright\" target=\"_blank\" rel=\"noopener\">OpenStreetMap</a>",
       "md.s.mde": "Al MDE, 45 min",
       "md.s.p": "Cada zona tiene su ritmo. Dinos el tuyo y elegimos la villa.",
       "md.sub": "La ciudad de la eterna primavera, a tu ritmo.",
